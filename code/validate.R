@@ -13,6 +13,7 @@ required <- c(
   "diagnostics/sample_linkage.csv",
   "diagnostics/loan_field_diagnostics.csv",
   "diagnostics/analysis_sample_checks.csv",
+  "diagnostics/model_sample_sizes.csv",
   "diagnostics/lender_source_heuristic.csv",
   "diagnostics/expenditure_quartile_boundaries.csv",
   "diagnostics/session_info.txt",
@@ -42,7 +43,9 @@ stopifnot(sum(loan$records) == 6053,
           all(loan$median_charge_rials > 0))
 co <- read.csv(file.path(out, "tables/regression_coefficients.csv"))
 stopifnot(setequal(unique(co$model),
-                   c("reported_entry_logit", "food_share_linear")),
+                   c("reported_entry_logit", "food_share_linear",
+                     "reported_entry_province_FE", "nonhousing_entry_logit",
+                     "food_share_province_FE")),
           !anyDuplicated(co[c("model", "term")]),
           all(is.finite(co$estimate)), all(is.finite(co$standard_error)),
           all(co$standard_error > 0), all(co$p_value >= 0 & co$p_value <= 1))
