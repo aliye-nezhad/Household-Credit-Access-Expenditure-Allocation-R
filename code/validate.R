@@ -30,6 +30,7 @@ required <- c(
   "tables/sector_purchase_associations.csv",
   "tables/borrowing_measurement_and_control_sensitivity.csv",
   "tables/leaveout_primary_robustness.csv",
+  "tables/loan_type_joint_contrast.csv",
   "tables/exclusive_loan_reporting_groups.csv",
   "diagnostics/loan_type_field_audit.csv",
   "diagnostics/loan_entry_multiplicity.csv",
@@ -160,14 +161,64 @@ assert_estimate <- function(actual, expected, tolerance = 1e-5) {
             all(is.finite(actual)),
             all(abs(unname(actual) - unname(expected)) < tolerance))
 }
-# New item-level purchase filters are checked before re-pinning expected odds
-# ratios; source counts and unchanged loan reporting rates remain exact.
+# Pin the corrected purchase-code interpretation and numerical estimates
+# to the checksum-verified survey inputs and dependency lockfile.
 code_audit <- read.csv(file.path(out,
                      "diagnostics/selected_durable_item_code_audit.csv"))
 stopifnot(all(code_audit$records>0),
           all(code_audit$nominal_total_rials>0),
           any(code_audit$selected),
           sum(code_audit$records[code_audit$selected])>0)
+stopifnot(
+  sum(code_audit$records[!code_audit$selected]) == 874L,
+  sum(code_audit$records[code_audit$selected]) == 20569L,
+  sum(primary$purchase_households[primary$outcome == "Any selected durable group"]) == 11486L,
+  sum(recon$leaveout_eligible) == 38275L
+)
+expected_annual <- c(
+  "Furniture and furnishings" = 1.44352455093663,
+  "Household appliances" = 1.48841478039395,
+  "Personal transport equipment" = 1.74015620813898,
+  "Any selected durable group" = 1.55253750896737
+)
+stopifnot(setequal(annual_models$purchase_group, names(expected_annual)))
+assert_estimate(annual_models$odds_ratio[
+  match(names(expected_annual),annual_models$purchase_group)],
+  expected_annual)
+expected_leaveout <- c(
+  "Furniture and furnishings" = 1.51484596902859,
+  "Household appliances" = 1.53836642071245,
+  "Personal transport equipment" = 2.08656293289689,
+  "Any selected durable group" = 1.64376886493273
+)
+stopifnot(setequal(primary$outcome,names(expected_leaveout)))
+assert_estimate(primary$odds_ratio[
+  match(names(expected_leaveout),primary$outcome)],
+  expected_leaveout)
+expected_groups <- c(
+  any = 1.64376886493273,
+  nonhousing_only_vs_none = 1.70673854754212,
+  housing_only_vs_none = 1.16311301911292
+)
+group_observed <- subset(sensitivity,
+  outcome == "Any selected durable group" & quartile_measure == "leaveout")
+stopifnot(setequal(group_observed$loan_comparison,names(expected_groups)))
+assert_estimate(group_observed$odds_ratio[
+  match(names(expected_groups),group_observed$loan_comparison)],
+  expected_groups)
+joint <- read.csv(file.path(out,"tables/loan_type_joint_contrast.csv"))
+stopifnot(nrow(joint)==2L,
+          setequal(joint$variance_method,c("Weights-only","Province-clustered")),
+          all(joint$observations==38275L),
+          all(joint$housing_only_n==556L),
+          all(joint$nonhousing_only_n==5176L),
+          all(joint$ci95_lower>0 & joint$ci95_upper>=joint$ci95_lower),
+          all(joint$p_value>=0 & joint$p_value<=1))
+assert_estimate(joint$odds_ratio_ratio, rep(1.46194188978319,2L))
+assert_estimate(
+  c(joint$ci95_lower[joint$variance_method=="Province-clustered"],
+    joint$ci95_upper[joint$variance_method=="Province-clustered"]),
+  c(1.16157293925257,1.83998267941581))
 assert_estimate(rates$reported_share_weighted[rates$group == "All"],
                 0.136942683409159, tolerance = 1e-8)
 stopifnot(sum(loan_groups$households[loan_groups$loan_group == "Housing only"]) == 556L,
