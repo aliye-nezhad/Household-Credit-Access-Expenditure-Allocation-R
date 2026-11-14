@@ -103,6 +103,44 @@ save_csv(loans %>% group_by(source_group) %>%
                      .groups="drop"),
          "diagnostics/source_text_classification_coverage.csv")
 
+
+# The questionnaire's Part 3 Table 13 measures annual purchases/transfers.
+# Distinguish selected durable-goods groups by item-code prefix. These are
+# nominal PURCHASE amounts (DYCOL05), not net of used-item resale (DYCOL06).
+# Codes 051: furniture/furnishings; 053: household appliances;
+# 071: personal transport equipment. The last is not transport services.
+read_annual_durable <- function(prefix, residence) {
+  d <- read.csv(file.path(input_dir,paste0(prefix,"P3S13.csv")),
+                colClasses="character",check.names=FALSE)
+  needed <- c("Address","DYCOL01","DYCOL04","DYCOL05")
+  check(all(needed %in% names(d)),"Missing Table 13 durable-item columns")
+  d <- d %>%
+    filter(substr(DYCOL01,1,3) %in% c("051","053","071"),
+           DYCOL04=="1") %>%
+    transmute(Address=household_id(Address),residence=residence,
+              purchase_group=case_when(
+                substr(DYCOL01,1,3)=="051" ~ "Furniture and furnishings",
+                substr(DYCOL01,1,3)=="053" ~ "Household appliances",
+                TRUE ~ "Personal transport equipment"),
+              amount_rials=numeric_value(DYCOL05))
+  check(!anyNA(d$Address) && all(is.finite(d$amount_rials) &
+                                d$amount_rials>0),
+        paste("Invalid annual purchase records:",prefix))
+  d
+}
+durable_rows <- bind_rows(read_annual_durable("R93","Rural"),
+                         read_annual_durable("U93","Urban"))
+durable_aggregate <- durable_rows %>%
+  group_by(residence,Address,purchase_group) %>%
+  summarise(annual_purchase_rials=sum(amount_rials),.groups="drop")
+check(!anyDuplicated(durable_aggregate[c("residence","Address","purchase_group")]),
+      "Duplicate aggregated annual durable purchases")
+save_csv(durable_rows %>%
+  group_by(purchase_group,residence) %>%
+  summarise(purchased_item_records=n(),
+            households_with_purchases=n_distinct(Address),.groups="drop"),
+  "diagnostics/annual_durable_purchase_source_counts.csv")
+
 # Questionnaire Part 3 sections 03, 05, 07, 08, 09 and 11 all use
 # previous-month recall. Each has item code DYCOL01, acquisition method
 # DYCOL02 and nominal expenditure DYCOL03 (purchased items: method 1).
@@ -157,6 +195,30 @@ reported <- loans %>% distinct(residence,Address) %>%
 base <- households %>%
   left_join(reported,by=c("residence","Address"),relationship="one-to-one") %>%
   mutate(reported_entry=coalesce(reported_entry,0L))
+
+durable_categories <- c("Furniture and furnishings","Household appliances",
+                        "Personal transport equipment")
+durable_data <- bind_rows(lapply(durable_categories,function(cat){
+  x <- durable_aggregate %>%
+    filter(purchase_group==cat) %>%
+    select(residence,Address,annual_purchase_rials)
+  base %>%
+    left_join(x,by=c("residence","Address"),relationship="one-to-one") %>%
+    mutate(annual_purchase_rials=coalesce(annual_purchase_rials,0),
+           purchase_incidence=as.integer(annual_purchase_rials>0),
+           purchase_group=cat)
+}))
+check(nrow(durable_data)==38275L*length(durable_categories),
+      "Annual purchase module produced unexpected household rows")
+durable_summary <- durable_data %>%
+  group_by(purchase_group,residence,reported_entry) %>%
+  summarise(households=n(),
+            positive_purchase_households=sum(purchase_incidence),
+            weighted_purchase_incidence=weighted.mean(purchase_incidence,weight),
+            weighted_mean_annual_purchase_rials=
+              weighted.mean(annual_purchase_rials,weight),
+            .groups="drop")
+save_csv(durable_summary,"tables/annual_durable_purchase_by_reporting_status.csv")
 sectors <- bind_rows(lapply(categories$sector,function(k){
   x <- purchases %>% filter(sector==k) %>%
     select(Address,residence,monthly_purchases_rials)
@@ -245,6 +307,52 @@ coef <- bind_rows(lapply(categories$sector,function(k){
 coef$fdr_bh_p_value <- p.adjust(coef$p_value,method="BH")
 save_csv(coef,"tables/sector_purchase_associations.csv")
 
+# Three pre-specified annual durable groups, plus an indicator for any
+# of the groups, use the same 12-month horizon as Table 13 loan entries.
+annual_model_categories <- c(durable_categories,"Any selected durable group")
+annual_models <- bind_rows(lapply(annual_model_categories,function(cat){
+  positive <- durable_aggregate %>%
+    filter(cat=="Any selected durable group" | purchase_group==cat) %>%
+    distinct(residence,Address) %>%
+    mutate(purchase_incidence=1L)
+  d <- model_frame %>%
+    mutate(residence=as.character(residence)) %>%
+    left_join(positive,by=c("residence","Address"),relationship="one-to-one") %>%
+    mutate(purchase_incidence=coalesce(purchase_incidence,0L),
+           residence=factor(residence,levels=c("Rural","Urban")))
+  design <- svydesign(ids=~1,weights=~weight,data=d)
+  model <- svyglm(
+    purchase_incidence ~ reported_entry + expenditure_quartile + residence +
+      age + gender + literacy + log_household_size,
+    design=design,family=quasibinomial())
+  fit <- summary(model)$coefficients["reported_entry",]
+  tibble(
+    purchase_group=cat,observations=nrow(d),
+    reporting_households=sum(d$reported_entry),
+    households_with_purchase=sum(d$purchase_incidence),
+    adjusted_log_odds=unname(fit[1]),
+    standard_error=unname(fit[2]),
+    odds_ratio=exp(unname(fit[1])),
+    ci95_lower=exp(unname(fit[1]-1.96*fit[2])),
+    ci95_upper=exp(unname(fit[1]+1.96*fit[2])),
+    p_value=unname(fit[4]))
+}))
+annual_models$fdr_bh_p_value <- p.adjust(annual_models$p_value,method="BH")
+save_csv(annual_models,"tables/annual_durable_purchase_associations.csv")
+
+annual_fig <- ggplot(durable_summary,
+   aes(x=purchase_group,y=100*weighted_purchase_incidence,
+       fill=factor(reported_entry,levels=c(0,1),
+                   labels=c("No loan-related entry","Loan-related entry")))) +
+  geom_col(position=position_dodge(width=.75),width=.65) +
+  facet_wrap(~residence,ncol=2) + coord_flip() +
+  labs(x=NULL,y="Positive purchases in previous 12 months (%)",
+       fill="Table 13 status") +
+  theme_minimal(base_size=11) +
+  theme(legend.position="bottom")
+ggsave(file.path(output_dir,"figures","annual_durable_purchase_participation.png"),
+       annual_fig,width=10.5,height=5.1,units="in",dpi=160)
+
 # Visualize observed purchase participation. The monthly module figures
 # are not annual expenditure shares or consumption responses to credit.
 fig <- ggplot(summary,
@@ -263,6 +371,8 @@ ggsave(file.path(output_dir,"figures","monthly_sector_purchase_participation.png
 writeLines(c(
   "Supplementary financial-source and sector-spending analysis",
   "Six monthly expenditure modules: 03, 05, 07, 08, 09, 11.",
+  "Selected annual durable purchase groups from Table 13: 051, 053, 071.",
+  "Table 13 purchased amounts are gross purchases over the preceding 12 months.",
   "Amounts are purchases in the month before interview. These are NOT annualized.",
   "Not all household consumption sectors are covered by this analysis.",
   "Loan presence means Table 13 fee-linked entry, not universal credit access.",

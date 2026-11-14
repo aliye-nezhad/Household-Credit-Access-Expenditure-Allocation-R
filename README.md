@@ -35,12 +35,13 @@ and processed without modifying the related repository.
    expenditure per household member.
 3. Describe reported amount distributions and conservatively categorized
    financing-source text.
-4. Compare household food and nonfood budget shares, together with six
-   separately measured previous-month expenditure categories.
-5. Estimate weighted logit models of reported loan-related entries and
-   of purchase participation in the six expenditure categories, plus a
-   weighted linear model of food-budget share.
-6. Apply province fixed-effect and non-housing-only sensitivity specifications,
+4. Compare **12-month furniture, appliance, and vehicle purchases** across
+   reporting groups. These annual measures use the same reference period
+   as the loan-related financial-service items.
+5. Examine six additional previous-month expenditure categories separately.
+6. Estimate weighted logit models of loan-entry status and annual durable
+   purchases, plus exploratory monthly spending models and a linear food-share model.
+7. Apply province fixed-effect and non-housing-only sensitivity specifications,
    and report exploratory financing-source classifications.
 
 The six additional expenditure sections measure purchases during the

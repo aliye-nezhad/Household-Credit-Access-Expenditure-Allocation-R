@@ -75,6 +75,34 @@ Variance estimates use a weights-only independent-household approximation
 and are not advertised as fully design-consistent. No causal identification
 strategy or policy-shock variation is claimed.
 
+## Annual durable purchases, aligned to the loan reporting period
+
+The questionnaire's Part 3 Table 13 uses a **previous 12-month**
+reference period. It includes selected durable purchases alongside other
+annual expenses and loan-related financial-service entries. We use
+DYCOL01 prefixes **051** (furniture and furnishings), **053**
+(household appliances), and **071** (personal transport equipment).
+For these records, DYCOL04 = 1 identifies purchased items, and DYCOL05
+is the nominal gross purchase amount. Second-hand resale (DYCOL06)
+is not subtracted; a separate net-purchase analysis would answer a
+different question. We do not include the 1261 loan-fee items in durable
+spending.
+
+We construct purchase participation and weighted mean nominal spending
+within each selected category, by reported loan-related entry and residence.
+Three weighted logistic regressions examine whether the co-occurrence of a
+loan-related entry and a purchase persists conditional on expenditure
+quartile, residence, household-head demographics, and household size.
+An additional model describes purchase participation in **any** of these
+three groups. False discovery rate adjustment is shown for these four
+exploratory outcomes as a family.
+
+The identical 12-month recall periods are a major improvement over
+comparing current monthly expenditure with annual loan entries, but they
+do not establish the temporal ordering, loan purpose, or whether a
+specific loan financed a specific purchase. Neither the regressions nor
+their precision can be given a causal interpretation.
+
 ## Additional monthly expenditure categories
 
 The supplied questionnaire labels Part 3 Sections 03 (clothing and footwear),

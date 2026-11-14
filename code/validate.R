@@ -19,6 +19,10 @@ required <- c(
   "diagnostics/session_info.txt",
   "figures/reported_entries_by_expenditure_quartile.png",
   "figures/monthly_sector_purchase_participation.png",
+  "tables/annual_durable_purchase_by_reporting_status.csv",
+  "tables/annual_durable_purchase_associations.csv",
+  "diagnostics/annual_durable_purchase_source_counts.csv",
+  "figures/annual_durable_purchase_participation.png",
   "tables/financing_source_groups.csv",
   "tables/monthly_sector_spending_by_reporting_status.csv",
   "tables/monthly_sector_spending_differences.csv",
@@ -80,4 +84,20 @@ stopifnot(nrow(purchase_models) == 6L,
           all(purchase_models$ci95_upper >= purchase_models$ci95_lower),
           all(purchase_models$fdr_bh_p_value >= 0 &
               purchase_models$fdr_bh_p_value <= 1))
+annual_table <- read.csv(file.path(out,
+                  "tables/annual_durable_purchase_by_reporting_status.csv"))
+stopifnot(nrow(annual_table) == 12L,
+          all(annual_table$households > 0),
+          all(annual_table$weighted_purchase_incidence >= 0 &
+              annual_table$weighted_purchase_incidence <= 1),
+          all(annual_table$weighted_mean_annual_purchase_rials >= 0))
+annual_models <- read.csv(file.path(out,
+                    "tables/annual_durable_purchase_associations.csv"))
+stopifnot(nrow(annual_models) == 4L,
+          all(is.finite(annual_models$odds_ratio) &
+              annual_models$odds_ratio > 0),
+          all(annual_models$ci95_lower > 0 &
+              annual_models$ci95_upper >= annual_models$ci95_lower),
+          all(annual_models$fdr_bh_p_value >= 0 &
+              annual_models$fdr_bh_p_value <= 1))
 message("All output and source-coverage checks passed.")
