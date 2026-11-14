@@ -81,7 +81,7 @@ This downloads and verifies pinned source files, processes the required survey t
 │   ├── tables/
 │   ├── figures/
 │   └── diagnostics/
-├── scripts/reproduce.sh
+├── scripts/reproduce.R
 ├── .github/workflows/reproduce.yml
 ├── .gitattributes
 ├── pixi.toml
