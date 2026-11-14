@@ -43,6 +43,33 @@ The survey's full sampling design is not established here; reported regression
 standard errors use a weights-only approximation. This is not a study of
 monetary-policy transmission or a causal estimate of the impact of credit.
 
+## Initial reproduced findings
+
+The first successful complete run on November 14, 2026 links **all 5,848**
+households with candidate loan-related records to the **38,275** households
+in the rural and urban expenditure workbooks. The complete-case model sample
+contains **38,189** households.
+
+| Sample | Reported-entry households | Survey-weighted entry rate |
+| --- | ---: | ---: |
+| Rural (n = 19,390) | 2,530 | 11.29% |
+| Urban (n = 18,885) | 3,318 | 14.55% |
+| All households (n = 38,275) | 5,848 | 13.69% |
+
+The model with household characteristics and expenditure quartiles finds a
+positive association between higher expenditure per person and reporting
+loan-related entries. The weighted food share is lower among households
+with such entries; the baseline adjusted food-share coefficient is
+approximately **-0.0119** (a 1.19 percentage-point difference), conditional
+on the stated controls. These are contemporaneous *associations*.
+
+The research workflow includes additional province fixed-effect and
+non-housing-only sensitivity specifications. The latest aggregate regression
+tables and figure are available as downloadable artifacts of
+[GitHub Actions runs](https://github.com/aliye-nezhad/Household-Credit-Access-Expenditure-Allocation-R/actions). The first validated run is
+[November 14, 2026](https://github.com/aliye-nezhad/Household-Credit-Access-Expenditure-Allocation-R/actions/runs/43565878556).
+
+
 ## Repository structure
 
 - code/analysis.R: dataset linkage, weighted descriptives, models, and figure.
