@@ -18,7 +18,7 @@ questions and layout as 1393, as confirmed for this project.
 | Access P3S13 loan items | DYCOL02 | Recorded loan amount in rials | Previous 12 months |
 | Access P3S13 loan items | DYCOL03 | Free-text reported financing source | Previous 12 months |
 | Access P3S13 loan items | DYCOL05 | Loan-related financial-service fee in rials | Previous 12 months |
-| Access P3S13 durable item prefixes 051,053,071 | DYCOL04=1 and DYCOL05 | Purchased durable goods; nominal gross purchase amounts | Previous 12 months |
+| Access P3S13 selected subcodes within 051/053/071 | DYCOL04=1 and DYCOL05 | Goods purchases with repairs, installation and rental excluded; nominal gross amounts | Previous 12 months |
 | Access P3S03, S05, S07, S08, S09, S11 | DYCOL02=1 and DYCOL03 | Purchased items in selected spending sectors | Previous month |
 
 Table 13 serves multiple functions, so the same DYCOL field may have
@@ -33,9 +33,9 @@ values indiscriminately.
   An absent record means no observed entry of this type, not verified
   absence of credit, outstanding debt, or rejected loan applications.
 - **Housing / non-housing entry:** separate indicators for those item codes.
-- **Durable purchase participation:** positive purchase recorded under
-  051 (furniture and furnishings), 053 (appliances), or 071 (personal
-  transport equipment) during the preceding 12 months.
+- **Durable purchase participation:** positive purchase under 0511/0512,
+  0531/0532, or 0711/0712/0713 except 071314. The 0513, 0533, and
+  071314 repair/rental categories are excluded.
 - **Any selected durable purchase:** union of those three annual outcomes.
 - **Expenditure quartile:** survey-weighted quartile of annual total
   household expenditure divided by household size, not income or wealth.
@@ -50,22 +50,31 @@ values indiscriminately.
 - **Exclusive loan status:** no recorded loan-fee entry, housing only,
   non-housing only, or both. A household in the 'both' group is excluded
   from the corresponding single-type-versus-no-entry comparison.
-- **Selected annual gross durable purchases:** household sum of purchased
-  Table 13 items within prefixes 051, 053, and 071, excluding the
-  loan-related fee codes. These amounts are not necessarily net expenditure.
+- **Selected annual gross durable purchases:** household sum of
+  selected goods purchase items, excluding 874 repair, cleaning,
+  installation and rental records in the three broad code families.
+  Values are gross rather than necessarily net of used-item sales.
 - **Leave-out annual expenditure:** `GHazineh` minus the selected annual
-  gross durable purchases. This is a **constructed sensitivity measure**,
-  not validated disposable income or nondurable spending.
+  gross durable purchases. Annual nominal rial units and recall periods
+  are comparable, but the workbook's exact GHazineh item accounting
+  remains unverified. This is a **constructed sensitivity measure**,
+  not validated net consumption, disposable income, or nondurable spending.
 - **Leave-out quartile:** survey-weighted quartile of leave-out expenditure
   per household member, constructed on the same eligible households
   as the comparable total-expenditure quartile.
+- **Joint loan-type contrast:** a single weighted model includes all four
+  mutually exclusive reporting groups and tests the non-housing-only
+  versus housing-only log-odds difference. The exponentiated difference
+  is a ratio of odds ratios, not a causal effect.
 - **Standardized probability difference:** weighted average of two
   predicted purchase probabilities from the same fitted model,
   changing the observed entry indicator while holding measured
   covariates fixed. It is not an estimated causal effect.
 
 The matched-sample specifications use all 38,275 workbook households,
-and no nonpositive leave-out totals were detected. The housing-only
+and no nonpositive leave-out totals were detected. The revised item
+code audit identifies 20,569 selected purchased-goods records for
+11,486 distinct purchasing households. The housing-only
 group contains 556 households, the non-housing-only group 5,176,
 and the group reporting both types 116. These figures describe
 the narrow Table 13 loan-related measure, not comprehensive borrowing.
