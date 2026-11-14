@@ -320,6 +320,56 @@ check(nrow(primary)==4L &&
       all(is.finite(primary$province_cluster_BH_p)),
       "Invalid corrected clustered p-values")
 save(primary,"tables/leaveout_primary_robustness.csv")
+
+# A direct contrast of housing-only and non-housing-only reporting in ONE
+# model and ONE common sample. Comparing separate confidence intervals is
+# not a test of whether their coefficients differ.
+joint_keys <- purchase_keys[["Any selected durable group"]] %>%
+  mutate(purchase=1L)
+joint_data <- d %>%
+  left_join(joint_keys,by=c("residence","Address"),
+            relationship="one-to-one") %>%
+  mutate(
+    purchase=coalesce(purchase,0L),
+    loan_group=factor(loan_group,
+      levels=c("No recorded entry","Housing only",
+               "Non-housing only","Both types")))
+joint_formula <- purchase ~ loan_group + q_leaveout + residence +
+  age + gender + literacy + log_household_size
+contrast_joint <- function(design,method) {
+  fit <- svyglm(joint_formula,design=design,family=quasibinomial())
+  co <- coef(fit)
+  v <- vcov(fit)
+  h <- "loan_groupHousing only"
+  n <- "loan_groupNon-housing only"
+  check(all(c(h,n) %in% names(co)) &&
+        all(is.finite(v[c(h,n),c(h,n)])),
+        "Joint model missing required loan-type coefficients")
+  delta <- unname(co[n]-co[h])
+  se <- sqrt(unname(v[n,n]+v[h,h]-2*v[n,h]))
+  check(is.finite(se) & se>0,"Joint loan-type contrast has invalid SE")
+  df <- if(method=="Province-clustered") df.residual(fit) else Inf
+  critical <- if(is.finite(df)) qt(.975,df=df) else qnorm(.975)
+  statistic <- delta/se
+  pv <- if(is.finite(df)) 2*pt(-abs(statistic),df=df) else
+                            2*pnorm(-abs(statistic))
+  tibble(variance_method=method,observations=nrow(joint_data),
+         housing_only_n=sum(joint_data$loan_group=="Housing only"),
+         nonhousing_only_n=sum(joint_data$loan_group=="Non-housing only"),
+         log_odds_difference_nonhousing_minus_housing=delta,
+         standard_error=se,reference_df=df,
+         odds_ratio_ratio=exp(delta),
+         ci95_lower=exp(delta-critical*se),
+         ci95_upper=exp(delta+critical*se),
+         p_value=pv)
+}
+joint <- bind_rows(
+  contrast_joint(svydesign(ids=~1,weights=~weight,data=joint_data),
+                 "Weights-only"),
+  contrast_joint(svydesign(ids=~province,weights=~weight,data=joint_data),
+                 "Province-clustered"))
+save(joint,"tables/loan_type_joint_contrast.csv")
+
 save(tibble(
   baseline_comparable_n=nrow(d),
   excluded_from_original_sample=nrow(base)-nrow(d),
