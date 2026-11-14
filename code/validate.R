@@ -4,6 +4,7 @@ if (length(args) != 1L) stop("Usage: Rscript code/validate.R OUTPUT_DIR")
 out <- args[[1]]
 required <- c(
   "RESULTS.md",
+  "RESEARCH_NOTE.md",
   "tables/reported_loan_entries_by_residence.csv",
   "tables/reported_entries_by_expenditure_quartile.csv",
   "tables/budget_composition_by_reporting_status.csv",

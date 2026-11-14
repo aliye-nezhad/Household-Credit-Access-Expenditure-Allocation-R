@@ -52,6 +52,13 @@ The survey's full sampling design is not established here; reported regression
 standard errors use a weights-only approximation. This is not a study of
 monetary-policy transmission or a causal estimate of the impact of credit.
 
+## Research findings and outputs
+
+[Research note](outputs/RESEARCH_NOTE.md) ·
+[Annual durable-purchase results](outputs/tables/annual_durable_purchase_associations.csv) ·
+[Annual durable-purchase figure](outputs/figures/annual_durable_purchase_participation.png) ·
+[Full output map](outputs/README.md)
+
 ## Initial reproduced findings
 
 The first successful complete run on November 14, 2026 links **all 5,848**
@@ -90,8 +97,10 @@ tables and figure are available as downloadable artifacts of
 - data/README.md: survey provenance.
 - .github/workflows/reproduce.yml: automated locked execution.
 
-Generated aggregate tables and figures are delivered as GitHub Actions
-artifacts rather than committing unpublished household-level data.
+Validated aggregate tables, figures, and a concise research note are retained
+under **[outputs/](outputs/README.md)** and are also downloadable as
+GitHub Actions artifacts. No raw or record-level survey files are published.
+The committed snapshot is refreshed only after a fully validated run.
 
 ## Reproduction
 

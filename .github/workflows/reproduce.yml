@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: household-credit-reproduce
@@ -43,3 +43,31 @@ jobs:
           path: reproduced/run-*/
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Commit validated aggregate research snapshot
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_dir="$(find reproduced -maxdepth 1 -mindepth 1 -type d -name 'run-*' | sort | tail -n 1)"
+          test -n "$run_dir"
+          test -s "$run_dir/RESEARCH_NOTE.md"
+          mkdir -p outputs/tables outputs/figures outputs/diagnostics
+          cp "$run_dir"/tables/*.csv outputs/tables/
+          cp "$run_dir"/figures/*.png outputs/figures/
+          for file in sample_linkage.csv source_loan_record_counts.csv loan_field_diagnostics.csv \
+            analysis_sample_checks.csv model_sample_sizes.csv \
+            sector_source_coverage.csv annual_durable_purchase_source_counts.csv \
+            source_text_classification_coverage.csv expenditure_quartile_boundaries.csv \
+            input_hashes.txt; do
+            cp "$run_dir/diagnostics/$file" "outputs/diagnostics/$file"
+          done
+          cp "$run_dir/RESULTS.md" outputs/RESULTS.md
+          cp "$run_dir/RESEARCH_NOTE.md" outputs/RESEARCH_NOTE.md
+          git add -A outputs
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' \
+                -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+                commit -m 'Update validated aggregate research results [skip ci]'
+            git push origin HEAD:main
+          fi

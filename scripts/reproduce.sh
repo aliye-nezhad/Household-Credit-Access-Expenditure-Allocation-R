@@ -38,6 +38,7 @@ for table in R93Data U93Data R93P3S13 U93P3S13 \
 done
 Rscript --vanilla code/analysis.R "$work/inputs" "$work/results"
 Rscript --vanilla code/extended_analysis.R "$work/inputs" "$work/results"
+Rscript --vanilla code/write_research_note.R "$work/results"
 Rscript --vanilla code/validate.R "$work/results"
 {
   printf 'Source Git commit: %s\n' "$source_sha"
