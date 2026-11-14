@@ -43,6 +43,31 @@ values indiscriminately.
   of the six selected sections during the prior month, not a measure
   of annual category shares.
 
+## Measurement sensitivity constructs
+
+- **Exclusive loan status:** no recorded loan-fee entry, housing only,
+  non-housing only, or both. A household in the 'both' group is excluded
+  from the corresponding single-type-versus-no-entry comparison.
+- **Selected annual gross durable purchases:** household sum of purchased
+  Table 13 items within prefixes 051, 053, and 071, excluding the
+  loan-related fee codes. These amounts are not necessarily net expenditure.
+- **Leave-out annual expenditure:** `GHazineh` minus the selected annual
+  gross durable purchases. This is a **constructed sensitivity measure**,
+  not validated disposable income or nondurable spending.
+- **Leave-out quartile:** survey-weighted quartile of leave-out expenditure
+  per household member, constructed on the same eligible households
+  as the comparable total-expenditure quartile.
+- **Standardized probability difference:** weighted average of two
+  predicted purchase probabilities from the same fitted model,
+  changing the observed entry indicator while holding measured
+  covariates fixed. It is not an estimated causal effect.
+
+The matched-sample specifications use all 38,275 workbook households,
+and no nonpositive leave-out totals were detected. The housing-only
+group contains 556 households, the non-housing-only group 5,176,
+and the group reporting both types 116. These figures describe
+the narrow Table 13 loan-related measure, not comprehensive borrowing.
+
 ## Eligibility and limitations
 
 Access roster: 39,856 household keys; workbooks: 38,275 households.

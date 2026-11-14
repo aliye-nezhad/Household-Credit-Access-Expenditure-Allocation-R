@@ -61,6 +61,32 @@ monetary-policy transmission or a causal estimate of the impact of credit.
 [Annual durable-purchase figure](outputs/figures/annual_durable_purchase_participation.png) ·
 [Full output map](outputs/README.md)
 
+## Measurement and econometric improvement
+
+The original adjusted comparisons use household expenditure-per-person
+quartiles, which can include the durable purchases being analyzed.
+A separately validated sensitivity recomputes the quartiles after
+subtracting the three selected annual durable-purchase categories.
+The **same 38,275 households** remain in the comparison.
+
+| Comparison | Adjusted odds ratio for any selected durable purchase |
+| --- | ---: |
+| Original total-expenditure control | 1.49 |
+| Expenditure excluding selected durable purchases | **1.58** |
+| Non-housing-only reports vs no recorded entry | 1.64 |
+| Housing-only reports vs no recorded entry | 1.08 |
+
+The leave-out any-entry estimate has a province-clustered 95% interval
+of **1.26–1.98**. For the separate comparisons, the weights-only
+95% intervals are **1.50–1.81** (non-housing) and **0.82–1.42**
+(housing). These are observational associations; the 'no entry' group
+does **not** mean confirmed nonborrowers, and the analysis cannot
+attribute durable purchases to a particular loan.
+
+[Full sensitivity results](outputs/tables/borrowing_measurement_and_control_sensitivity.csv) ·
+[Exclusive loan-report groups](outputs/tables/exclusive_loan_reporting_groups.csv) ·
+[Reconciliation checks](outputs/diagnostics/expenditure_leaveout_reconciliation.csv)
+
 ## Initial reproduced findings
 
 The first successful complete run on November 14, 2026 links **all 5,848**
@@ -92,6 +118,7 @@ tables and figure are available as downloadable artifacts of
 
 - code/analysis.R: dataset linkage, weighted descriptives, models, and figure.
 - code/extended_analysis.R: detailed monthly spending and lender-source groups.
+- code/measurement_sensitivity.R: exclusive loan types and matched expenditure-control alternatives.
 - code/validate.R: source-count and output checks.
 - scripts/reproduce.sh: isolated download, verification, and execution.
 - docs/METHODOLOGY.md: constructs, identification limits, and inference.

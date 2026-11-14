@@ -6,6 +6,8 @@ observations, survey addresses, the original Access database, or raw survey file
 
 - [Research note](RESEARCH_NOTE.md): question, design, main estimates, limitations.
 - [Run summary](RESULTS.md): source counts and measurement safeguards.
+- [Measurement and econometric sensitivity](tables/borrowing_measurement_and_control_sensitivity.csv): comparable spending controls, separated loan types, and adjusted probabilities.
+- [Exclusive loan-type groups](tables/exclusive_loan_reporting_groups.csv): weighted descriptive classifications.
 - [Model and descriptive tables](tables/): regression and descriptive CSV outputs.
 - [Figures](figures/): reproducible annual and monthly comparisons.
 - [Diagnostics](diagnostics/): source counts, model samples and input hashes.

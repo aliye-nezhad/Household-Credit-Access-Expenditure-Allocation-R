@@ -108,6 +108,68 @@ do not establish the temporal ordering, loan purpose, or whether a
 specific loan financed a specific purchase. Neither the regressions nor
 their precision can be given a causal interpretation.
 
+## Loan-type measurement and expenditure-control sensitivity
+
+Loan reporting is classified into four **mutually exclusive** groups:
+no entry of either type, housing only, non-housing only, and both types.
+The first group means no recorded entry in the two fee-linked questions,
+not necessarily no loans or credit access. A household with both types
+must not silently be counted as a housing-only or non-housing-only reporter.
+The exclusive groups and their weighted shares are audited separately.
+The financing-source field is still free text and does not establish
+bank approval, borrowing terms, or debt balances.
+
+**Expenditure-control endogeneity.** The original annual durable-purchase
+logistic models control for a weighted quartile of total annual household
+expenditure per person. That total can incorporate the very purchases
+used to define the dependent variable. It is therefore an imperfect
+covariate for a conditional association. An explicit robustness exercise
+constructs:
+
+```text
+alternative annual expenditure
+  = GHazineh
+  - gross purchases in Table 13 groups 051, 053, and 071
+```
+
+Weighted per-person expenditure quartiles are recalculated on this
+alternative amount. Because the workbook's precise accounting
+crosswalk has not been independently validated, the resulting
+measure is an **accounting leave-out proxy**, not verified income,
+wealth, or nondurable consumption. It is not an instrumental
+variable or a pre-borrowing measure.
+
+Four matched-sample outcome models compare the original total-expenditure
+control with the leave-out control. Further models contrast **non-housing
+only** and **housing only**, each against households with no recorded
+loan-related entry, excluding the other reporting categories. These are
+different descriptive populations, not mutually interchangeable
+causal comparisons. The sample reconciliation checks whether removing
+the selected purchases creates nonpositive residual expenditure.
+
+The sensitivity analysis also reports standardized *predicted-probability
+differences* from fitted weighted logit models. These are model-based
+descriptive percentage-point contrasts, not treatment effects; the
+reported intervals relate to odds ratios, not to these probability
+differences. For the four leave-out any-entry outcomes, a further
+province-clustered uncertainty sensitivity and Benjamini-Hochberg
+adjustment are shown. The original complex sample design remains
+unverified.
+
+The completed 1393 audit retains all 38,275 households for the matched
+total-versus-leave-out comparison. The **any selected durable purchase**
+model changes from OR 1.49 with the original control to OR 1.58 using
+the leave-out control (province-clustered 95% interval 1.26–1.98).
+The non-housing-only comparison has OR 1.64 (weights-only 95% interval
+1.50–1.81), while the housing-only comparison is OR 1.08
+(weights-only 95% interval 0.82–1.42). This difference does not
+establish that non-housing loans financed the observed purchases.
+
+Full aggregate results are in
+[`borrowing_measurement_and_control_sensitivity.csv`](../outputs/tables/borrowing_measurement_and_control_sensitivity.csv).
+Loan-type counts and sample diagnostics are in the results folder.
+The original baseline remains unchanged and reproducible.
+
 ## Additional monthly expenditure categories
 
 The supplied questionnaire labels Part 3 Sections 03 (clothing and footwear),
