@@ -334,7 +334,10 @@ annual_models <- bind_rows(lapply(annual_model_categories,function(cat){
   clustered_design <- svydesign(ids=~province,weights=~weight,data=d)
   clustered_model <- svyglm(form,design=clustered_design,family=quasibinomial())
   clustered_fit <- summary(clustered_model)$coefficients["reported_entry",]
-  tcrit <- qt(.975,df=survey::degf(clustered_design))
+  residual_df <- stats::df.residual(clustered_model)
+  check(is.finite(residual_df) && residual_df > 0,
+        "Invalid province-cluster regression degrees of freedom")
+  tcrit <- qt(.975,df=residual_df)
   check(is.finite(tcrit) & is.finite(clustered_fit[2]) &
         clustered_fit[2] > 0,"Invalid province cluster sensitivity estimate")
   tibble(
@@ -348,6 +351,7 @@ annual_models <- bind_rows(lapply(annual_model_categories,function(cat){
     ci95_upper=exp(unname(fit[1]+1.96*fit[2])),
     p_value=unname(fit[4]),
     province_clusters=province_clusters,
+    province_cluster_residual_df=residual_df,
     province_cluster_standard_error=unname(clustered_fit[2]),
     province_cluster_ci95_lower=exp(unname(clustered_fit[1]-tcrit*clustered_fit[2])),
     province_cluster_ci95_upper=exp(unname(clustered_fit[1]+tcrit*clustered_fit[2])),

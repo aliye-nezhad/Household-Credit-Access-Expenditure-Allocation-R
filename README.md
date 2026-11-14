@@ -95,6 +95,7 @@ tables and figure are available as downloadable artifacts of
 - code/validate.R: source-count and output checks.
 - scripts/reproduce.sh: isolated download, verification, and execution.
 - docs/METHODOLOGY.md: constructs, identification limits, and inference.
+- docs/VARIABLE_MAP.md: source fields, recall periods, outcomes, and exclusions.
 - data/source_sha256.txt: pinned source archive hashes.
 - data/README.md: survey provenance.
 - .github/workflows/reproduce.yml: automated locked execution.
