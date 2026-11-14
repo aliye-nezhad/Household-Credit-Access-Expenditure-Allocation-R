@@ -2,7 +2,7 @@ Measurement and econometric sensitivity:
 Loan types: housing only / non-housing only / both / no recorded entry.
 Four purchase outcomes, four adjusted specifications per outcome.
 Expenditure covariate alternatives use an identical analytical sample.
-Leave-out spending is total expenditure minus selected gross durable purchases;
+Leave-out spending excludes repair and rental codes from the durable subtraction;
 the source accounting identity is not independently validated.
 Province-clustered t-based confidence intervals use fitted residual df;
 neither weights-only nor province clustering reconstructs official HEIS design.

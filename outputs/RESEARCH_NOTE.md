@@ -17,8 +17,9 @@ as the presence of at least one such item. No entry means no recorded
 **entry of this type**, not necessarily no borrowing or outstanding debt.
 
 Our principal expenditure outcomes use Table 13 purchases recorded over 
-the **previous 12 months**: code families **051** (furniture and furnishings), 
+the **previous 12 months**: selected items within **051** (furniture and furnishings), 
 **053** (household appliances), and **071** (personal transport equipment). 
+Repair, cleaning, installation and rental items are excluded. 
 Purchased records have acquisition method 1, and reported gross nominal 
 purchase amounts are not netted against sales of used items. The shared 
 recall window is preferable to comparing an annual loan report directly 
@@ -42,12 +43,12 @@ a recorded loan-related financial-service entry.
 
 | Category | Residence | No entry | Entry | Difference (pp) |
 | --- | --- | ---: | ---: | ---: |
-| Furniture and furnishings | Rural | 10.67% | 20.81% | 10.15 |
-| Furniture and furnishings | Urban | 13.60% | 19.11% | 5.51 |
-| Household appliances | Rural | 19.38% | 30.61% | 11.22 |
-| Household appliances | Urban | 18.47% | 28.99% | 10.52 |
-| Personal transport equipment | Rural | 3.50% | 9.09% | 5.59 |
-| Personal transport equipment | Urban | 5.06% | 10.68% | 5.62 |
+| Furniture and furnishings | Rural | 10.54% | 20.30% | 9.76 |
+| Furniture and furnishings | Urban | 11.10% | 18.08% | 6.98 |
+| Household appliances | Rural | 19.00% | 30.35% | 11.35 |
+| Household appliances | Urban | 17.94% | 27.98% | 10.04 |
+| Personal transport equipment | Rural | 2.95% | 8.19% | 5.24 |
+| Personal transport equipment | Urban | 4.48% | 10.53% | 6.04 |
 
 ![Selected durable purchases, by residence and reporting status](figures/annual_durable_purchase_participation.png)
 
@@ -62,10 +63,10 @@ reporting are:
 
 | Annual purchase outcome | Odds ratio | 95% interval (weights-only) | 95% interval (province clusters) | Cluster BH-adjusted p |
 | --- | ---: | ---: | ---: | ---: |
-| Furniture and furnishings | 1.25 | 1.12–1.40 | 1.05–1.51 | 0.017 |
-| Household appliances | 1.51 | 1.37–1.66 | 1.09–2.08 | 0.017 |
-| Personal transport equipment | 1.60 | 1.35–1.88 | 1.34–1.90 | <0.001 |
-| Any selected durable group | 1.49 | 1.36–1.63 | 1.15–1.93 | 0.009 |
+| Furniture and furnishings | 1.44 | 1.29–1.62 | 1.06–1.97 | 0.023 |
+| Household appliances | 1.49 | 1.35–1.64 | 1.08–2.06 | 0.023 |
+| Personal transport equipment | 1.74 | 1.46–2.07 | 1.50–2.02 | <0.001 |
+| Any selected durable group | 1.55 | 1.42–1.70 | 1.12–2.14 | 0.020 |
 
 These province-clustered intervals treat provinces as clusters and
 use t-based critical values with the fitted model residual degrees
@@ -81,7 +82,7 @@ In a secondary weighted linear model, reported loan-entry status is associated w
 Because annual total expenditure includes some of the purchases being
 modeled, the baseline quartile control may mechanically overlap with
 the dependent variable. An additional specification subtracts gross
-purchases in code families 051, 053, and 071 before computing weighted
+qualifying goods purchases within 051, 053, and 071 before computing weighted
 expenditure-per-person quartiles. This is an accounting sensitivity,
 not a validated measure of nondurable expenditure, income, or wealth.
 The same eligible households are used to compare the total and
@@ -91,10 +92,10 @@ The leave-out comparison retains 38,275 households; 0 are excluded by the leave-
 
 | Annual outcome | Total-expenditure OR (same sample) | Leave-out OR | Province-clustered 95% interval (leave-out) |
 | --- | ---: | ---: | ---: |
-| Furniture and furnishings | 1.25 | 1.32 | 1.10–1.59 |
-| Household appliances | 1.51 | 1.56 | 1.14–2.13 |
-| Personal transport equipment | 1.60 | 1.89 | 1.67–2.15 |
-| Any selected durable group | 1.49 | 1.58 | 1.26–1.98 |
+| Furniture and furnishings | 1.44 | 1.51 | 1.13–2.03 |
+| Household appliances | 1.49 | 1.54 | 1.13–2.10 |
+| Personal transport equipment | 1.74 | 2.09 | 1.76–2.48 |
+| Any selected durable group | 1.55 | 1.64 | 1.24–2.17 |
 
 As a distinct measurement check, households are classified into four
 mutually exclusive groups: no loan-related entry, housing-only,
@@ -117,8 +118,8 @@ For the combined durable-purchase outcome, the alternative comparisons are:
 
 | Loan-report comparison | Leave-out adjusted OR | 95% interval (weights-only) |
 | --- | ---: | ---: |
-| Non-housing only vs no entry | 1.64 | 1.50–1.81 |
-| Housing only vs no entry | 1.08 | 0.82–1.42 |
+| Non-housing only vs no entry | 1.71 | 1.55–1.87 |
+| Housing only vs no entry | 1.16 | 0.88–1.53 |
 
 The control-substitution exercise does not remove selection bias,
 prove that a loan paid for a purchase, or identify a causal effect.

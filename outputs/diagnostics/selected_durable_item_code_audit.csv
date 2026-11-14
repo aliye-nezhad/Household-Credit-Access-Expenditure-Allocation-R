@@ -1,0 +1,13 @@
+"residence","prefix","classification","selected","records","distinct_households","nominal_total_rials"
+"Rural","051","Furniture repair or cleaning",FALSE,40,39,78980000
+"Rural","051","Selected durable purchase",TRUE,3275,2432,25530720000
+"Rural","053","Appliance repair installation or rental",FALSE,94,87,30205000
+"Rural","053","Selected durable purchase",TRUE,6388,3834,32440087300
+"Rural","071","Bicycle repair",FALSE,88,88,20410000
+"Rural","071","Selected durable purchase",TRUE,733,717,77804135000
+"Urban","051","Furniture repair or cleaning",FALSE,366,364,510570000
+"Urban","051","Selected durable purchase",TRUE,3567,2606,34457185000
+"Urban","053","Appliance repair installation or rental",FALSE,142,128,48925000
+"Urban","053","Selected durable purchase",TRUE,5668,3583,34900056000
+"Urban","071","Bicycle repair",FALSE,144,144,39975000
+"Urban","071","Selected durable purchase",TRUE,938,923,136961310000

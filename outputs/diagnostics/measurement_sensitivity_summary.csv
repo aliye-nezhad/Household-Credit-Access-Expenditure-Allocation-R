@@ -1,2 +1,2 @@
 "baseline_comparable_n","excluded_from_original_sample","only_loan_reporting_records","reporting_households","selected_durable_purchase_records","interpretation"
-38275,0,6053,5848,21443,"The leave-out measure is nominal annual total household expenditure minus gross purchases in selected 051/053/071 Table 13 codes. It is not validated income, wealth or exact nondurable expenditure."
+38275,0,6053,5848,20569,"The leave-out measure is nominal annual total household expenditure minus documented purchases in 051/053/071 after excluding repair items. It is not validated income, wealth or exact nondurable expenditure."
