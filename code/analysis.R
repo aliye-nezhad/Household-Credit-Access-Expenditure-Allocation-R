@@ -312,7 +312,7 @@ coef_data <- function(model, name, scale) {
   c <- summary(model)$coefficients
   tibble(model = name, term = rownames(c), estimate = unname(c[, 1]),
          standard_error = unname(c[, 2]), statistic = unname(c[, 3]),
-         p_value = unname(c[, 4]), scale = scale, observations = nobs(model))
+         p_value = unname(c[, 4]), scale = scale, observations = length(model$linear.predictors))
 }
 write_table(bind_rows(
   coef_data(m_entry, "reported_entry_logit", "log_odds"),
