@@ -21,6 +21,7 @@ validation.
 - [Annual purchase models](tables/annual_durable_purchase_associations.csv)
 - [Preferred leave-out sensitivity](tables/leaveout_primary_robustness.csv)
 - [Full alternative specifications](tables/borrowing_measurement_and_control_sensitivity.csv)
+- [Direct housing/non-housing coefficient contrast](tables/loan_type_joint_contrast.csv)
 - [Monthly sector associations](tables/sector_purchase_associations.csv)
 - [Lender-source classifications](tables/financing_source_groups.csv)
 
@@ -31,6 +32,8 @@ validation.
 - [Expenditure-quartile comparisons](figures/reported_entries_by_expenditure_quartile.png)
 - [Household linkage](diagnostics/sample_linkage.csv)
 - [Expenditure reconciliation](diagnostics/expenditure_leaveout_reconciliation.csv)
+- [Durable-item repair/service exclusion audit](diagnostics/selected_durable_item_code_audit.csv)
+- [Questionnaire/code trace](../docs/QUESTIONNAIRE_TRACE.md)
 - [Input hashes](diagnostics/input_hashes.txt)
 
 All findings are descriptive and do not establish comprehensive credit access,
