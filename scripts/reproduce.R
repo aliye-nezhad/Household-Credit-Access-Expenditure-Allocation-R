@@ -142,7 +142,8 @@ main <- function() {
   }
 
   code_files <- c("data/source_sha256.txt", "pixi.toml", "pixi.lock",
-                  "scripts/reproduce.R", ".github/workflows/reproduce.yml", scripts)
+                  "scripts/reproduce.R", ".github/workflows/reproduce.yml",
+                  "code/durable_codes.R", scripts)
   archive_hashes <- run(sha256, vapply(file.path(raw_dir, archives),
                                        shQuote, character(1L)))
   stable_archive_hashes <- paste0(substr(archive_hashes, 1L, 64L),

@@ -7,6 +7,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(survey)
 })
+source("code/durable_codes.R")
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 2L) stop("Usage: Rscript code/extended_analysis.R INPUT_DIR OUTPUT_DIR")
@@ -105,18 +106,15 @@ save_csv(loans %>% group_by(source_group) %>%
 
 
 # The questionnaire's Part 3 Table 13 measures annual purchases/transfers.
-# Distinguish selected durable-goods groups by item-code prefix. These are
-# nominal PURCHASE amounts (DYCOL05), not net of used-item resale (DYCOL06).
-# Codes 051: furniture/furnishings; 053: household appliances;
-# 071: personal transport equipment. The last is not transport services.
+# Documented purchase items only, excluding repairs/rentals inside
+# three-digit item families. Gross DYCOL05 values are not net of resale.
 read_annual_durable <- function(prefix, residence) {
   d <- read.csv(file.path(input_dir,paste0(prefix,"P3S13.csv")),
                 colClasses="character",check.names=FALSE)
   needed <- c("Address","DYCOL01","DYCOL04","DYCOL05")
   check(all(needed %in% names(d)),"Missing Table 13 durable-item columns")
   d <- d %>%
-    filter(substr(DYCOL01,1,3) %in% c("051","053","071"),
-           DYCOL04=="1") %>%
+    filter(selected_durable_purchase(DYCOL01), DYCOL04=="1") %>%
     transmute(Address=household_id(Address),residence=residence,
               purchase_group=case_when(
                 substr(DYCOL01,1,3)=="051" ~ "Furniture and furnishings",

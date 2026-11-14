@@ -79,7 +79,8 @@ jobs:
             input_hashes.txt loan_type_field_audit.csv \
             loan_entry_multiplicity.csv expenditure_leaveout_reconciliation.csv \
             alternative_expenditure_quartiles.csv alternative_rank_crosswalk.csv \
-            measurement_sensitivity_summary.csv measurement_sensitivity_notes.txt; do
+            measurement_sensitivity_summary.csv measurement_sensitivity_notes.txt \
+            selected_durable_item_code_audit.csv; do
             cp "$run_dir/diagnostics/$file" "outputs/diagnostics/$file"
           done
           cp "$run_dir/RESULTS.md" outputs/RESULTS.md

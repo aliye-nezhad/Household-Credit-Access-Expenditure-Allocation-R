@@ -5,6 +5,7 @@ suppressPackageStartupMessages({
   library(readxl)
   library(survey)
 })
+source("code/durable_codes.R")
 args <- commandArgs(trailingOnly=TRUE)
 if(length(args)!=2L) stop("Usage: Rscript code/measurement_sensitivity.R INPUT_DIR OUTPUT_DIR")
 input <- args[[1]]
@@ -117,11 +118,24 @@ save(base %>%
 # Select only questionnaire-documented purchased annual durable categories.
 # Total expenditure less these gross purchases is an accounting sensitivity,
 # not a validated measure of disposable income or nondurable consumption.
-durable <- raw %>%
+broad_items <- raw %>%
   filter(substr(DYCOL01,1,3) %in% c("051","053","071"),
          DYCOL04=="1") %>%
-  transmute(Address,residence,prefix=substr(DYCOL01,1,3),
-            amount=number(DYCOL05))
+  transmute(Address,residence,code=DYCOL01,prefix=substr(DYCOL01,1,3),
+            amount=number(DYCOL05),
+            selected=selected_durable_purchase(DYCOL01),
+            classification=durable_exclusion_reason(DYCOL01))
+check(!anyNA(broad_items$Address) &&
+      all(is.finite(broad_items$amount) & broad_items$amount>0),
+      "Invalid Table 13 durable-category records")
+save(broad_items %>%
+  group_by(residence,prefix,classification,selected) %>%
+  summarise(records=n(),distinct_households=n_distinct(Address),
+            nominal_total_rials=sum(amount),.groups="drop"),
+  "diagnostics/selected_durable_item_code_audit.csv")
+durable <- broad_items %>%
+  filter(selected) %>%
+  select(Address,residence,prefix,amount)
 check(!anyNA(durable$Address) &&
       all(is.finite(durable$amount)&durable$amount>0),
       "Invalid annual purchased-durable observations")
@@ -314,7 +328,7 @@ save(tibble(
   selected_durable_purchase_records=nrow(durable),
   interpretation=paste(
     "The leave-out measure is nominal annual total household expenditure",
-    "minus gross purchases in selected 051/053/071 Table 13 codes.",
+    "minus documented purchases in 051/053/071 after excluding repair items.",
     "It is not validated income, wealth or exact nondurable expenditure.")
 ), "diagnostics/measurement_sensitivity_summary.csv")
 
@@ -323,7 +337,7 @@ writeLines(c(
   "Loan types: housing only / non-housing only / both / no recorded entry.",
   "Four purchase outcomes, four adjusted specifications per outcome.",
   "Expenditure covariate alternatives use an identical analytical sample.",
-  "Leave-out spending is total expenditure minus selected gross durable purchases;",
+  "Leave-out spending excludes repair and rental codes from the durable subtraction;",
   "the source accounting identity is not independently validated.",
   "Province-clustered t-based confidence intervals use fitted residual df;",
   "neither weights-only nor province clustering reconstructs official HEIS design.",
