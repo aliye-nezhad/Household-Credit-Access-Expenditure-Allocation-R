@@ -60,10 +60,10 @@ reporting are:
 
 | Annual purchase outcome | Odds ratio | 95% interval (weights-only) | 95% interval (province clusters) | Cluster BH-adjusted p |
 | --- | ---: | ---: | ---: | ---: |
-| Furniture and furnishings | 1.25 | 1.12–1.40 | 1.05–1.50 | 0.017 |
-| Household appliances | 1.51 | 1.37–1.66 | 1.10–2.07 | 0.017 |
+| Furniture and furnishings | 1.25 | 1.12–1.40 | 1.05–1.51 | 0.017 |
+| Household appliances | 1.51 | 1.37–1.66 | 1.09–2.08 | 0.017 |
 | Personal transport equipment | 1.60 | 1.35–1.88 | 1.34–1.90 | <0.001 |
-| Any selected durable group | 1.49 | 1.36–1.63 | 1.15–1.92 | 0.009 |
+| Any selected durable group | 1.49 | 1.36–1.63 | 1.15–1.93 | 0.009 |
 
 The baseline weighted logit for loan-entry reporting itself finds a positive conditional association for the highest versus lowest expenditure-per-person quartile (OR 3.32, 95% interval 2.85–3.86). A province-adjusted version gives OR 5.34. These are distinct adjusted specifications, not a causal gradient.
 
@@ -81,7 +81,8 @@ of full annual expenditures.
 ![Previous-month purchase participation](figures/monthly_sector_purchase_participation.png)
 
 These province-clustered intervals treat provinces as clusters and
-use a t-based reference with 30 cluster degrees of freedom. The
+use t-based critical values with the fitted model residual degrees
+of freedom. The
 estimates are a variance sensitivity check rather than an official
 reconstruction of the HEIS sampling design.
 
