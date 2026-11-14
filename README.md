@@ -21,11 +21,11 @@ The analysis joins the original survey's Access tables with rural and urban hous
 | Non-housing-only reporting households | 5,176 |
 | Households reporting both categories | 116 |
 
-The survey-weighted reporting rate in the 38,275-household workbook sample is **13.69%**. Loan-related items **126111** (housing) and **126112** (non-housing) come from Part 3, Table 13. The selected annual durable-purchase codes are **051**, **053**, and **071**. Six other expenditure categories are examined separately using their previous-month recall periods.
+The survey-weighted reporting rate in the 38,275-household workbook sample is **13.69%**. Loan-related items **126111** (housing) and **126112** (non-housing) come from Part 3, Table 13. The selected annual goods-purchase items fall within **051**, **053**, and **071**, with repairs and services excluded (874 excluded source records). Six other expenditure categories are examined separately using their previous-month recall periods.
 
 Data are downloaded from a [fixed revision of the companion HEIS repository](https://github.com/aliye-nezhad/household-catastrophic-health-expenditure-R/tree/92c5f6162323eb08cee9d51463814542f9a12367/data/raw) with SHA-256 checks. Source survey files are not duplicated in this repository.
 
-[Data provenance](data/README.md) · [Variable definitions](docs/VARIABLE_MAP.md)
+[Data provenance](data/README.md) · [Questionnaire-to-code audit](docs/QUESTIONNAIRE_TRACE.md) · [Variable definitions](docs/VARIABLE_MAP.md)
 
 ## Main results
 
@@ -33,16 +33,16 @@ The models use survey weights and control for household expenditure position, ru
 
 | Specification | Adjusted odds ratio: any selected durable purchase |
 | --- | ---: |
-| Loan-related report, total-expenditure quartiles | 1.49 |
-| Loan-related report, leave-out expenditure quartiles | **1.58** |
-| Non-housing-only report versus no recorded entry | 1.64 |
-| Housing-only report versus no recorded entry | 1.08 |
+| Loan-related report, total-expenditure quartiles | 1.55 |
+| Loan-related report, leave-out expenditure quartiles | **1.64** |
+| Non-housing-only report versus no recorded entry | 1.71 |
+| Housing-only report versus no recorded entry | 1.16 |
 
-The leave-out specification subtracts selected gross durable purchases from annual total expenditure before ranking households. On the **same 38,275-household sample**, the combined adjusted odds ratio is **1.58** (province-clustered 95% interval **1.26–1.98**). The non-housing-only and housing-only comparisons have weights-only 95% intervals of **1.50–1.81** and **0.82–1.42**, respectively.
+The leave-out specification subtracts selected goods purchases from annual total expenditure before ranking households. On the **same 38,275-household sample**, the combined adjusted odds ratio is **1.64** (province-clustered 95% interval **1.24–2.17**). The non-housing-only and housing-only comparisons have weights-only 95% intervals of **1.55–1.87** and **0.88–1.53**, respectively.
 
-The positive association is more evident for non-housing reports, but the data cannot establish that a loan paid for a durable purchase. The absence of a loan-related entry does not prove that a household had no borrowing.
+A direct test in a **single model** gives a non-housing-versus-housing odds-ratio ratio of **1.46** (province-clustered 95% interval **1.16–1.84**, p = **0.0026**). This establishes a conditional association difference within the model, not loan-financed purchases or a causal effect. No reported entry does not establish no borrowing.
 
-[Research note](outputs/RESEARCH_NOTE.md) · [Main robustness table](outputs/tables/leaveout_primary_robustness.csv) · [All model comparisons](outputs/tables/borrowing_measurement_and_control_sensitivity.csv) · [Results index](outputs/README.md)
+[Research note](outputs/RESEARCH_NOTE.md) · [Main robustness table](outputs/tables/leaveout_primary_robustness.csv) · [Joint loan-type contrast](outputs/tables/loan_type_joint_contrast.csv) · [All model comparisons](outputs/tables/borrowing_measurement_and_control_sensitivity.csv) · [Results index](outputs/README.md)
 
 ## Methods and limitations
 
@@ -67,6 +67,7 @@ This downloads and verifies pinned source files, processes the required survey t
 ~~~text
 ├── code/
 │   ├── analysis.R
+│   ├── durable_codes.R
 │   ├── extended_analysis.R
 │   ├── measurement_sensitivity.R
 │   ├── write_research_note.R
@@ -76,6 +77,7 @@ This downloads and verifies pinned source files, processes the required survey t
 │   └── source_sha256.txt
 ├── docs/
 │   ├── METHODOLOGY.md
+│   ├── QUESTIONNAIRE_TRACE.md
 │   └── VARIABLE_MAP.md
 ├── outputs/
 │   ├── RESEARCH_NOTE.md
