@@ -74,6 +74,55 @@ The baseline weighted logit for loan-entry reporting itself finds a positive con
 
 In a secondary weighted linear model, reported loan-entry status is associated with a food budget share -1.19 percentage points lower conditional on the baseline controls; the province-adjusted specification gives -1.98 percentage points. Food share and total expenditure are mechanically related, and both may be endogenous to household financial decisions.
 
+### Measurement and expenditure-control sensitivity
+
+Because annual total expenditure includes some of the purchases being
+modeled, the baseline quartile control may mechanically overlap with
+the dependent variable. An additional specification subtracts gross
+purchases in code families 051, 053, and 071 before computing weighted
+expenditure-per-person quartiles. This is an accounting sensitivity,
+not a validated measure of nondurable expenditure, income, or wealth.
+The same eligible households are used to compare the total and
+leave-out expenditure controls.
+
+The leave-out comparison retains 38,275 households; 0 are excluded by the leave-out or control-variable requirements.
+
+| Annual outcome | Total-expenditure OR (same sample) | Leave-out OR | Province-clustered 95% interval (leave-out) |
+| --- | ---: | ---: | ---: |
+| Furniture and furnishings | 1.25 | 1.32 | 1.10–1.59 |
+| Household appliances | 1.51 | 1.56 | 1.14–2.13 |
+| Personal transport equipment | 1.60 | 1.89 | 1.67–2.15 |
+| Any selected durable group | 1.49 | 1.58 | 1.26–1.98 |
+
+As a distinct measurement check, households are classified into four
+mutually exclusive groups: no loan-related entry, housing-only,
+non-housing-only, or both types. Housing-only and non-housing-only
+associations are estimated separately against households without an
+entry. These are not comparisons with verified nonborrowers.
+
+| Residence | Reported loan-item group | Households | Weighted group share |
+| --- | --- | ---: | ---: |
+| Rural | Both types | 36 | 0.14% |
+| Rural | Housing only | 257 | 1.13% |
+| Rural | No recorded entry | 16,860 | 88.71% |
+| Rural | Non-housing only | 2,237 | 10.02% |
+| Urban | Both types | 80 | 0.41% |
+| Urban | Housing only | 299 | 1.43% |
+| Urban | No recorded entry | 15,567 | 85.45% |
+| Urban | Non-housing only | 2,939 | 12.71% |
+
+For the combined durable-purchase outcome, the alternative comparisons are:
+
+| Loan-report comparison | Leave-out adjusted OR | 95% interval (weights-only) |
+| --- | ---: | ---: |
+| Non-housing only vs no entry | 1.64 | 1.50–1.81 |
+| Housing only vs no entry | 1.08 | 0.82–1.42 |
+
+The control-substitution exercise does not remove selection bias,
+prove that a loan paid for a purchase, or identify a causal effect.
+Province clustering remains a sensitivity approximation rather than
+the official survey design.
+
 ### Additional monthly purchase categories
 
 The questionnaire separately records previous-month spending on clothing 
@@ -121,6 +170,8 @@ or household microdata are published in the results.
 - [Reproducibility instructions](../README.md)
 - [Aggregate model coefficients](tables/regression_coefficients.csv)
 - [Annual durable outcomes](tables/annual_durable_purchase_associations.csv)
+- [Comparable expenditure-control sensitivities](tables/borrowing_measurement_and_control_sensitivity.csv)
+- [Exclusive loan-report classifications](tables/exclusive_loan_reporting_groups.csv)
 - [Monthly sector outcomes](tables/sector_purchase_associations.csv)
 - [Financing-source diagnostics](tables/financing_source_groups.csv)
 

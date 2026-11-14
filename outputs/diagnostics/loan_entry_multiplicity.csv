@@ -1,0 +1,5 @@
+"loan_group","households","mean_record_count","households_with_multiple_entries"
+"Both types",116,2.05172413793103,116
+"Housing only",556,1.00179856115108,1
+"No recorded entry",32427,0,0
+"Non-housing only",5176,1.01584234930448,63
