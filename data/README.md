@@ -21,3 +21,10 @@ as the 1393 survey, as confirmed for this project. The fields are interpreted
 together with the observed 1393 records; the scope and limitations are stated
 in the [methodology](../docs/METHODOLOGY.md) and
 [variable map](../docs/VARIABLE_MAP.md).
+
+The [2014 household-survey catalog](https://catalog.ihsn.org/catalog/10341/related-materials)
+lists a year-specific questionnaire and codebook. This project's
+page-by-page audit directly inspects the supplied 1392 questionnaire,
+whose relevant questions were confirmed unchanged for 1393; the
+separately listed 1393 files have not been independently downloaded
+and compared. See [the questionnaire field trace](../docs/QUESTIONNAIRE_TRACE.md).
