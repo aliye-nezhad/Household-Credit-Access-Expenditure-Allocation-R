@@ -65,6 +65,11 @@ reporting are:
 | Personal transport equipment | 1.60 | 1.35–1.88 | 1.34–1.90 | <0.001 |
 | Any selected durable group | 1.49 | 1.36–1.63 | 1.15–1.93 | 0.009 |
 
+These province-clustered intervals treat provinces as clusters and
+use t-based critical values with the fitted model residual degrees
+of freedom. The estimates are a variance sensitivity check rather than
+an official reconstruction of the HEIS sampling design.
+
 The baseline weighted logit for loan-entry reporting itself finds a positive conditional association for the highest versus lowest expenditure-per-person quartile (OR 3.32, 95% interval 2.85–3.86). A province-adjusted version gives OR 5.34. These are distinct adjusted specifications, not a causal gradient.
 
 In a secondary weighted linear model, reported loan-entry status is associated with a food budget share -1.19 percentage points lower conditional on the baseline controls; the province-adjusted specification gives -1.98 percentage points. Food share and total expenditure are mechanically related, and both may be endogenous to household financial decisions.
@@ -79,12 +84,6 @@ are neither an exhaustive annual consumption basket nor a decomposition
 of full annual expenditures.
 
 ![Previous-month purchase participation](figures/monthly_sector_purchase_participation.png)
-
-These province-clustered intervals treat provinces as clusters and
-use t-based critical values with the fitted model residual degrees
-of freedom. The
-estimates are a variance sensitivity check rather than an official
-reconstruction of the HEIS sampling design.
 
 ## 4. Financial intermediation and measurement issues
 
