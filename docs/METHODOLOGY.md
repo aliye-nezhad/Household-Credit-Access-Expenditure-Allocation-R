@@ -17,10 +17,13 @@ The original Access database contains rural and urban Part 3 Table 13 records
 - 126111: housing-loan-related financial-service charge.
 - 126112: non-housing-loan-related financial-service charge.
 
-Based on the 1392 questionnaire and 1393 record patterns, DYCOL02 is treated as
-a candidate reported loan amount, DYCOL03 as the reported financing source, and
-DYCOL05 as the financial-service charge. A year-specific 1393 questionnaire or
-official codebook is still needed to definitively document these mappings.
+The supplied 1392 questionnaire has the same relevant questions and layout as
+the 1393 questionnaire, as confirmed for this project. The Table 13 loan-item
+fields are mapped accordingly: DYCOL02 is the reported loan amount, DYCOL03
+is the reported financing source, and DYCOL05 is the financial-service charge.
+These mappings are also consistent with the observed 1393 Access table structure
+and value patterns. The form does not establish that every household borrowing
+transaction is captured by these two item codes.
 
 The binary outcome is **presence of at least one of these two Table 13 entries**.
 A zero means no recorded entry of this kind. It does not establish that a

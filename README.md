@@ -1,7 +1,7 @@
-# Reported Household Borrowing and Expenditure Allocation in Iran
+# Reported Household Borrowing and Expenditure Allocation
 
-An empirical R project using Iran's **1393 Household Expenditure and Income
-Survey (2014–15)**. It examines which households report housing- and
+An empirical R project using the **1393 Household Expenditure and Income
+Survey (HEIS, 2014–15)**. It examines which households report housing- and
 non-housing-loan-linked financial-service transactions, how reported amounts
 and financing sources are distributed, and how household spending composition
 varies with reporting status.
@@ -101,9 +101,11 @@ and conda-forge packages.
 ## Scope
 
 This repository is a distinct household-finance study. It does not change
-the companion catastrophic-health-expenditure repository. The 1392
-questionnaire supports the preliminary loan-field interpretations, but
-a year-specific 1393 codebook remains desirable.
+the companion catastrophic-health-expenditure repository. The supplied 1392
+questionnaire uses the same relevant questions and layout as the 1393 survey,
+as confirmed for this project. The loan-item definitions are applied to the
+1393 Access records, with the interpretation restricted to reported loan-related
+financial-service entries.
 
 ## License
 
