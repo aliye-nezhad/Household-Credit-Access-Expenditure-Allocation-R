@@ -17,6 +17,8 @@ sector <- read_table("tables/sector_purchase_associations.csv")
 loan_types <- read_table("tables/exclusive_loan_reporting_groups.csv")
 sensitivity <- read_table("tables/borrowing_measurement_and_control_sensitivity.csv")
 leaveout <- read_table("tables/leaveout_primary_robustness.csv")
+joint_contrast <- read_table("tables/loan_type_joint_contrast.csv")
+item_audit <- read_table("diagnostics/selected_durable_item_code_audit.csv")
 reconciliation <- read_table("diagnostics/expenditure_leaveout_reconciliation.csv")
 
 
@@ -130,6 +132,13 @@ for(cat in unique(annual$purchase_group)) {
 rows <- c(rows,
  "",
  "![Selected durable purchases, by residence and reporting status](figures/annual_durable_purchase_participation.png)",
+ "",
+ paste0(
+ "The item-level audit excludes ",
+ nfmt(sum(item_audit$records[!item_audit$selected])),
+ " repair, cleaning, installation, or rental entries from the broader ",
+ "durable-category code families."
+ ),
  "",
  "## 3. Conditional associations",
  "",
@@ -252,6 +261,24 @@ for(k in c("nonhousing_only_vs_none","housing_only_vs_none")) {
 }
 rows <- c(rows,
  "",
+ "### Direct housing versus non-housing coefficient test",
+ "",
+ "The next contrast compares the non-housing-only and housing-only",
+ "coefficients **in a single joint model** with all four reporting",
+ "groups and the same household sample. Exponentiating the coefficient",
+ "difference gives a ratio of odds ratios. This is not a causal contrast.",
+ "",
+ "| Variance assumption | Ratio of odds ratios | 95% interval | p-value |",
+ "| --- | ---: | ---: | ---: |"
+)
+for (i in seq_len(nrow(joint_contrast))) {
+ x <- joint_contrast[i,]
+ rows <- c(rows,sprintf("| %s | %s | %s–%s | %s |",
+   x$variance_method,cell(x$odds_ratio_ratio),
+   cell(x$ci95_lower),cell(x$ci95_upper),ptext(x$p_value)))
+}
+rows <- c(rows,
+ "",
  "The control-substitution exercise does not remove selection bias,",
  "prove that a loan paid for a purchase, or identify a causal effect.",
  "Province clustering remains a sensitivity approximation rather than",
@@ -319,6 +346,8 @@ rows <- c(rows,
  "- [Annual durable outcomes](tables/annual_durable_purchase_associations.csv)",
  "- [Comparable expenditure-control sensitivities](tables/borrowing_measurement_and_control_sensitivity.csv)",
  "- [Exclusive loan-report classifications](tables/exclusive_loan_reporting_groups.csv)",
+ "- [Direct loan-type contrast](tables/loan_type_joint_contrast.csv)",
+ "- [Questionnaire-to-code audit](../docs/QUESTIONNAIRE_TRACE.md)",
  "- [Monthly sector outcomes](tables/sector_purchase_associations.csv)",
  "- [Financing-source diagnostics](tables/financing_source_groups.csv)",
  "",
