@@ -84,13 +84,17 @@ strategy or policy-shock variation is claimed.
 The questionnaire's Part 3 Table 13 uses a **previous 12-month**
 reference period. It includes selected durable purchases alongside other
 annual expenses and loan-related financial-service entries. We use
-DYCOL01 prefixes **051** (furniture and furnishings), **053**
-(household appliances), and **071** (personal transport equipment).
-For these records, DYCOL04 = 1 identifies purchased items, and DYCOL05
-is the nominal gross purchase amount. Second-hand resale (DYCOL06)
-is not subtracted; a separate net-purchase analysis would answer a
-different question. We do not include the 1261 loan-fee items in durable
-spending.
+selected goods subcodes **0511/0512** (furnishings, carpets and
+floor coverings), **0531/0532** (household appliances), and
+**0711/0712/0713** (personal transport), excluding **071314**
+(bicycle repair). The broader prefixes also contain **0513**
+(furniture repair/cleaning) and **0533** (appliance repair, installation,
+and rental). Excluding these items removes 874 service records from
+the earlier broad definition. For retained records, DYCOL04 = 1
+identifies a purchased acquisition and DYCOL05 is the nominal gross
+amount. Second-hand sales (DYCOL06) are not netted. The 1261 loan-fee
+items are not included in durable spending.
+[Questionnaire-to-code evidence](QUESTIONNAIRE_TRACE.md).
 
 We construct purchase participation and weighted mean nominal spending
 within each selected category, by reported loan-related entry and residence.
@@ -133,15 +137,18 @@ constructs:
 ```text
 alternative annual expenditure
   = GHazineh
-  - gross purchases in Table 13 groups 051, 053, and 071
+  - qualifying goods purchases in Table 13 families 051/053/071, excluding repairs and rentals
 ```
 
 Weighted per-person expenditure quartiles are recalculated on this
 alternative amount. Because the workbook's precise accounting
 crosswalk has not been independently validated, the resulting
 measure is an **accounting leave-out proxy**, not verified income,
-wealth, or nondurable consumption. It is not an instrumental
-variable or a pre-borrowing measure.
+wealth, or nondurable consumption. The workbook's exact GHazineh
+construction has not been independently reconstructed. In particular,
+annual expenditure may net sales of used items while the adjustment
+subtracts gross purchased goods. This is not a demonstrated exact
+accounting identity, instrumental variable, or pre-borrowing measure.
 
 Four matched-sample outcome models compare the original total-expenditure
 control with the leave-out control. Further models contrast **non-housing
@@ -160,14 +167,20 @@ province-clustered uncertainty sensitivity and Benjamini-Hochberg
 adjustment are shown. The original complex sample design remains
 unverified.
 
-The completed 1393 audit retains all 38,275 households for the matched
-total-versus-leave-out comparison. The **any selected durable purchase**
-model changes from OR 1.49 with the original control to OR 1.58 using
-the leave-out control (province-clustered 95% interval 1.26–1.98).
-The non-housing-only comparison has OR 1.64 (weights-only 95% interval
-1.50–1.81), while the housing-only comparison is OR 1.08
-(weights-only 95% interval 0.82–1.42). This difference does not
-establish that non-housing loans financed the observed purchases.
+The corrected item-code audit retains **38,275 households** for
+matched comparisons. For any selected durable purchase, the adjusted
+odds ratio changes from **1.55** under the full expenditure control
+to **1.64** under the leave-out control (province-clustered 95%
+interval **1.24–2.17**). Non-housing-only and housing-only reporting
+give ORs **1.71** (weights-only interval **1.55–1.87**) and **1.16**
+(weights-only interval **0.88–1.53**) in their separate models.
+
+A common-sample model with all four mutually exclusive reporting
+categories directly tests the non-housing-only versus housing-only
+coefficient difference. Its adjusted odds-ratio ratio is **1.46**
+(province-clustered 95% interval **1.16–1.84**, p = **0.0026**).
+This remains a descriptive association, not evidence of what financed
+the reported purchases.
 
 Full aggregate results are in
 [`borrowing_measurement_and_control_sensitivity.csv`](../outputs/tables/borrowing_measurement_and_control_sensitivity.csv).
