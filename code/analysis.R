@@ -310,9 +310,10 @@ m_food <- svyglm(
 )
 coef_data <- function(model, name, scale) {
   c <- summary(model)$coefficients
+  n_used <- length(model$linear.predictors)
   tibble(model = name, term = rownames(c), estimate = unname(c[, 1]),
          standard_error = unname(c[, 2]), statistic = unname(c[, 3]),
-         p_value = unname(c[, 4]), scale = scale, observations = length(model$linear.predictors))
+         p_value = unname(c[, 4]), scale = scale, observations = n_used)
 }
 write_table(bind_rows(
   coef_data(m_entry, "reported_entry_logit", "log_odds"),
