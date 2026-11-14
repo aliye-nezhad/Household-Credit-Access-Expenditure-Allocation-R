@@ -1,6 +1,8 @@
-# Household Borrowing and Durable-Goods Purchases
+# Household Credit Access and Expenditure Allocation
 
-An empirical **R** study using the 1393 Household Expenditure and Income Survey (HEIS, 2014–15). It examines household reports of housing- and non-housing-loan-related financial-service transactions and their association with purchases of selected durable goods.
+*Evidence from Loan-Related Transactions in the 2014–2015 Household Survey*
+
+An empirical **R** study using the 2014–2015 Household Expenditure and Income Survey (HEIS). It examines household reports of housing- and non-housing-loan-related financial-service transactions and their association with purchases of selected durable goods.
 
 **Research question:** How are these two categories of loan-related reports distributed across households, and how do they co-occur with purchases of furnishings, household appliances, and personal transport equipment?
 

@@ -40,12 +40,14 @@ food_baseline <- extract("food_share_linear","reported_entry")
 food_fe <- extract("food_share_province_FE","reported_entry")
 
 rows <- c(
- "# Household Borrowing Reports and Durable-Goods Purchases",
+ "# Household Credit Access and Expenditure Allocation",
+ "",
+ "*Evidence from Loan-Related Transactions in the 2014–2015 Household Survey*",
  "",
  "## Abstract",
  "",
  paste0(
-  "Using the 1393 Household Expenditure and Income Survey (2014–15), ",
+  "Using the 2014–2015 Household Expenditure and Income Survey, ",
   "we examine household reports of loan-related financial-service entries ",
   "and the relationship with expenditures on selected durable goods. ",
   "The underlying expenditure workbooks contain ",nfmt(get("Source household workbooks")),

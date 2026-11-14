@@ -363,7 +363,9 @@ ggsave(file.path(output_dir, "figures", "reported_entries_by_expenditure_quartil
        p, width = 8, height = 5, units = "in", dpi = 160)
 
 report <- c(
-  "# Reported borrowing entries and household expenditure: 1393 HEIS",
+  "# Household Credit Access and Expenditure Allocation",
+  "",
+  "*Evidence from Loan-Related Transactions in the 2014–2015 Household Survey*",
   "",
   paste0("The original Access roster contains ", nrow(raw_roster),
          " households. The distributed expenditure workbooks contain ",

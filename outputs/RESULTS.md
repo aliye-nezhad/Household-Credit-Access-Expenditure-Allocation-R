@@ -1,4 +1,6 @@
-# Reported borrowing entries and household expenditure: 1393 HEIS
+# Household Credit Access and Expenditure Allocation
+
+*Evidence from Loan-Related Transactions in the 2014–2015 Household Survey*
 
 The original Access roster contains 39856 households. The distributed expenditure workbooks contain 38275 households.
 Part 3 Table 13 contains 6053 loan-charge records for 5848 distinct households; 5848 reporting households match the expenditure workbooks.

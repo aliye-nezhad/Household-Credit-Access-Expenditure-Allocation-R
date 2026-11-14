@@ -1,4 +1,8 @@
-# Research design and measurement
+# Household Credit Access and Expenditure Allocation
+
+*Evidence from Loan-Related Transactions in the 2014–2015 Household Survey*
+
+## Research design and measurement
 
 ## Question
 
@@ -7,7 +11,7 @@ report a housing- or non-housing-loan-related financial-service entry differ fro
 those who do not report such an entry? How does observed expenditure composition
 vary with that reported status?
 
-The analysis is descriptive and based on a single survey wave: HEIS 1393 (2014–15).
+The analysis is descriptive and based on a single survey wave: the 2014–2015 HEIS.
 
 ## Loan measures
 
