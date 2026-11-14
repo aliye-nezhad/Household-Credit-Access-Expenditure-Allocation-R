@@ -1,7 +1,6 @@
 # Data provenance
 
-The source is the 1393 Household Expenditure and Income Survey (HEIS,
-2014–15), conducted in Iran. This repository does not duplicate the
+The Statistical Center of Iran conducted the 1393 Household Expenditure and Income Survey (HEIS, 2014–15). [Survey background](https://m-hoseini.github.io/HEIS/introduction.html). This repository does not duplicate the
 original binary survey files. It retrieves three archives from the
 [companion HEIS repository](https://github.com/aliye-nezhad/household-catastrophic-health-expenditure-R)
 at commit `92c5f6162323eb08cee9d51463814542f9a12367`:

@@ -152,4 +152,50 @@ stopifnot(nrow(sensitivity)==16L,nrow(primary)==4L,
               primary$province_cluster_ci95_upper>=primary$province_cluster_ci95_lower),
           all(primary$province_cluster_BH_p>=0 &
               primary$province_cluster_BH_p<=1))
+# Pin the published headline estimates to the checksum-verified source and lockfile.
+# These are regression-test reference results, not additional statistical tests.
+assert_estimate <- function(actual, expected, tolerance = 1e-5) {
+  stopifnot(length(actual) == length(expected), !anyNA(actual),
+            all(is.finite(actual)),
+            all(abs(unname(actual) - unname(expected)) < tolerance))
+}
+expected_annual <- c(
+  "Furniture and furnishings" = 1.25488640466989,
+  "Household appliances" = 1.50859658783882,
+  "Personal transport equipment" = 1.59552223904062,
+  "Any selected durable group" = 1.48772902010611
+)
+stopifnot(setequal(annual_models$purchase_group, names(expected_annual)))
+assert_estimate(
+  annual_models$odds_ratio[match(names(expected_annual),
+                                 annual_models$purchase_group)],
+  expected_annual)
+expected_leaveout <- c(
+  "Furniture and furnishings" = 1.32054918285566,
+  "Household appliances" = 1.55798702123309,
+  "Personal transport equipment" = 1.89234855230593,
+  "Any selected durable group" = 1.5759340544712
+)
+stopifnot(setequal(primary$outcome, names(expected_leaveout)))
+assert_estimate(primary$odds_ratio[match(names(expected_leaveout),
+                                        primary$outcome)], expected_leaveout)
+group_expected <- c("any" = 1.5759340544712,
+                    "nonhousing_only_vs_none" = 1.6446548493533,
+                    "housing_only_vs_none" = 1.08103546521557)
+group_observed <- subset(sensitivity,
+  outcome == "Any selected durable group" & quartile_measure == "leaveout")
+stopifnot(setequal(group_observed$loan_comparison, names(group_expected)))
+assert_estimate(group_observed$odds_ratio[
+  match(names(group_expected), group_observed$loan_comparison)],
+  group_expected)
+assert_estimate(rates$reported_share_weighted[rates$group == "All"],
+                0.136942683409159, tolerance = 1e-8)
+stopifnot(sum(loan_groups$households[loan_groups$loan_group == "Housing only"]) == 556L,
+          sum(loan_groups$households[loan_groups$loan_group == "Non-housing only"]) == 5176L,
+          sum(loan_groups$households[loan_groups$loan_group == "Both types"]) == 116L)
+any_primary <- subset(primary, outcome == "Any selected durable group")
+assert_estimate(c(any_primary$province_cluster_ci95_lower,
+                  any_primary$province_cluster_ci95_upper),
+                c(1.25692113045484, 1.97591406800784))
+
 message("All output and source-coverage checks passed.")

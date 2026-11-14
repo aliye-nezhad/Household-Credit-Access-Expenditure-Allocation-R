@@ -141,9 +141,14 @@ main <- function() {
     run(rscript, arguments, output = FALSE)
   }
 
-  code_files <- c("pixi.lock", scripts, "scripts/reproduce.R")
-  hashes <- run(sha256, vapply(c(file.path(raw_dir, archives), code_files),
-                               shQuote, character(1L)))
+  code_files <- c("data/source_sha256.txt", "pixi.toml", "pixi.lock",
+                  "scripts/reproduce.R", ".github/workflows/reproduce.yml", scripts)
+  archive_hashes <- run(sha256, vapply(file.path(raw_dir, archives),
+                                       shQuote, character(1L)))
+  stable_archive_hashes <- paste0(substr(archive_hashes, 1L, 64L),
+                                  "  raw/", archives)
+  code_hashes <- run(sha256, vapply(code_files, shQuote, character(1L)))
+  hashes <- c(stable_archive_hashes, code_hashes)
   dir.create(file.path(result_dir, "diagnostics"), showWarnings = FALSE)
   writeLines(c(paste("Source Git commit:", source_sha), hashes),
              file.path(result_dir, "diagnostics", "input_hashes.txt"))

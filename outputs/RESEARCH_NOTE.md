@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Using the 1393 Household Expenditure and Income Survey (2014–15), we examine household reports of loan-related financial-service entries and the relationship with expenditures on selected durable goods. The underlying expenditure workbooks contain 38,275 households, of which 5,848 have at least one loan-related Table 13 entry. The survey-weighted national reporting rate is 13.69%. Loan-entry reporting and purchases of furnishings, appliances, and personal transport equipment are positively associated conditional on expenditure position and observed household characteristics. These results are descriptive; loan reports do not measure all credit access, and the analysis cannot identify financing or causal effects.
+Using the 1393 Household Expenditure and Income Survey (2014–15), we examine household reports of loan-related financial-service entries and the relationship with expenditures on selected durable goods. The underlying expenditure workbooks contain 38,275 households, of which 5,848 have at least one loan-related Table 13 entry. The survey-weighted reporting rate in the household-workbook sample is 13.69%. Loan-entry reporting and purchases of furnishings, appliances, and personal transport equipment are positively associated conditional on expenditure position and observed household characteristics. These results are descriptive; loan reports do not measure all credit access, and the analysis cannot identify financing or causal effects.
 
 ## 1. Survey data and measurement
 

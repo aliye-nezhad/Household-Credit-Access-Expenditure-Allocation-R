@@ -19,7 +19,7 @@ The analysis joins the original survey's Access tables with rural and urban hous
 | Non-housing-only reporting households | 5,176 |
 | Households reporting both categories | 116 |
 
-The survey-weighted reporting rate is **13.69%**. Loan-related items **126111** (housing) and **126112** (non-housing) come from Part 3, Table 13. The selected annual durable-purchase codes are **051**, **053**, and **071**. Six other expenditure categories are examined separately using their previous-month recall periods.
+The survey-weighted reporting rate in the 38,275-household workbook sample is **13.69%**. Loan-related items **126111** (housing) and **126112** (non-housing) come from Part 3, Table 13. The selected annual durable-purchase codes are **051**, **053**, and **071**. Six other expenditure categories are examined separately using their previous-month recall periods.
 
 Data are downloaded from a [fixed revision of the companion HEIS repository](https://github.com/aliye-nezhad/household-catastrophic-health-expenditure-R/tree/92c5f6162323eb08cee9d51463814542f9a12367/data/raw) with SHA-256 checks. Source survey files are not duplicated in this repository.
 

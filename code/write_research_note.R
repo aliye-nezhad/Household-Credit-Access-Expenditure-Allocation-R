@@ -51,7 +51,7 @@ rows <- c(
   "The underlying expenditure workbooks contain ",nfmt(get("Source household workbooks")),
   " households, of which ",nfmt(get("Distinct reporting households")),
   " have at least one loan-related Table 13 entry. ",
-  "The survey-weighted national reporting rate is ",
+  "The survey-weighted reporting rate in the household-workbook sample is ",
   pct(rates$reported_share_weighted[rates$group=="All"]),
   ". Loan-entry reporting and purchases of furnishings, appliances, and ",
   "personal transport equipment are positively associated conditional ",
