@@ -308,6 +308,23 @@ m_food <- svyglm(
     gender + literacy + log_household_size,
   design = design
 )
+# Province fixed effects adjust for observed regional differences; they do
+# not turn these single-year associations into causal effects.
+m_entry_province <- svyglm(
+  reported_entry ~ expenditure_quartile + residence + factor(province) +
+    age + gender + literacy + log_household_size,
+  design = design, family = quasibinomial()
+)
+m_nonhousing <- svyglm(
+  nonhousing_entry ~ expenditure_quartile + residence + age + gender +
+    literacy + log_household_size,
+  design = design, family = quasibinomial()
+)
+m_food_province <- svyglm(
+  food_share ~ reported_entry + expenditure_quartile + residence +
+    factor(province) + age + gender + literacy + log_household_size,
+  design = design
+)
 coef_data <- function(model, name, scale) {
   c <- summary(model)$coefficients
   n_used <- length(model$linear.predictors)
@@ -317,8 +334,21 @@ coef_data <- function(model, name, scale) {
 }
 write_table(bind_rows(
   coef_data(m_entry, "reported_entry_logit", "log_odds"),
-  coef_data(m_food, "food_share_linear", "fraction_of_budget")
+  coef_data(m_food, "food_share_linear", "fraction_of_budget"),
+  coef_data(m_entry_province, "reported_entry_province_FE", "log_odds"),
+  coef_data(m_nonhousing, "nonhousing_entry_logit", "log_odds"),
+  coef_data(m_food_province, "food_share_province_FE", "fraction_of_budget")
 ), "regression_coefficients.csv")
+write_table(tibble(
+  specification = c("Baseline reported-entry logit", "Province FE reported-entry logit",
+                    "Non-housing entry logit", "Baseline food-share regression",
+                    "Province FE food-share regression"),
+  observations = c(length(m_entry$linear.predictors),
+                   length(m_entry_province$linear.predictors),
+                   length(m_nonhousing$linear.predictors),
+                   length(m_food$linear.predictors),
+                   length(m_food_province$linear.predictors))
+), "model_sample_sizes.csv", "diagnostics")
 
 p <- ggplot(quartile_rates, aes(x = expenditure_quartile,
                                y = 100 * reported_share_weighted,
