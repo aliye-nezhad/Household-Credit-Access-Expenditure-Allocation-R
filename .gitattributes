@@ -1,0 +1,8 @@
+# Count analytical R source files in GitHub's language summary.
+# Keep orchestration and environment support files available for reproduction.
+scripts/*.sh -linguist-detectable
+.github/workflows/*.yml -linguist-detectable
+pixi.toml -linguist-detectable
+pixi.lock -linguist-detectable
+CITATION.cff -linguist-detectable
+*.R linguist-language=R

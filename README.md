@@ -1,162 +1,99 @@
-# Reported Household Borrowing and Expenditure Allocation
+# Household Borrowing and Durable-Goods Purchases
 
-An empirical R project using the **1393 Household Expenditure and Income
-Survey (HEIS, 2014–15)**. It examines which households report housing- and
-non-housing-loan-linked financial-service transactions, how reported amounts
-and financing sources are distributed, and how household spending composition
-varies with reporting status.
+An empirical **R** study using the 1393 Household Expenditure and Income Survey (HEIS, 2014–15). It examines household reports of housing- and non-housing-loan-related financial-service transactions and their association with purchases of selected durable goods.
 
-**The outcome is the presence of a recorded loan-related financial-service
-entry, not comprehensive credit access or outstanding debt.** The estimates
-describe associations rather than causal effects of borrowing.
+**Research question:** How are these two categories of loan-related reports distributed across households, and how do they co-occur with purchases of furnishings, household appliances, and personal transport equipment?
 
-## Data and measures
+**Scope:** The measure records specific financial-service entries, **not** comprehensive credit access, outstanding debt, or verified loan-financed purchases. Estimates describe associations, not causal effects.
 
-The project uses the original survey Access archive and rural/urban household
-workbooks, available in the
-[related HEIS R repository](https://github.com/aliye-nezhad/household-catastrophic-health-expenditure-R).
-The borrowing indicators derive from Part 3 Table 13 codes 126111 (housing)
-and 126112 (non-housing). The 1393 archive contains 6,053 corresponding
-records for 5,848 distinct households in the full 39,856-household Access
-roster. The separate analysis workbooks contain 38,275 households; exact
-matches and analytical exclusions are reported by the reproducibility run.
+## Data and sample
 
-The analysis uses nominal annual total and food expenditure (GHazineh and
-VKhorak) and household demographics from the workbooks. The project does
-not interpret ambiguous economic-rank fields as verified income deciles.
+The analysis joins the original survey's Access tables with rural and urban household workbooks.
 
-The source data are pinned to a fixed commit, checked against SHA-256 hashes,
-and processed without modifying the related repository.
-
-## Empirical approach
-
-1. Audit and link loan-related records to household identifiers.
-2. Estimate weighted reported-entry rates by residence and quartiles of
-   expenditure per household member.
-3. Describe reported amount distributions and conservatively categorized
-   financing-source text.
-4. Compare **12-month furniture, appliance, and vehicle purchases** across
-   reporting groups. These annual measures use the same reference period
-   as the loan-related financial-service items.
-5. Examine six additional previous-month expenditure categories separately.
-6. Estimate weighted logit models of loan-entry status and annual durable
-   purchases, plus exploratory monthly spending models and a linear food-share model.
-7. Apply province fixed-effect and non-housing-only sensitivity specifications,
-   and report exploratory financing-source classifications.
-
-The six additional expenditure sections measure purchases during the
-**previous month**, not full-year spending. Their participation results
-are not interpreted as causal consumption responses to credit.
-
-The survey's full sampling design is not established here; baseline
-regression standard errors use a weights-only approximation. The annual
-durable-outcome models additionally report a province-clustered variance
-sensitivity with 31 clusters. This is not a study of
-monetary-policy transmission or a causal estimate of the impact of credit.
-
-## Research findings and outputs
-
-[Research note](outputs/RESEARCH_NOTE.md) ·
-[Annual durable-purchase results](outputs/tables/annual_durable_purchase_associations.csv) ·
-[Annual durable-purchase figure](outputs/figures/annual_durable_purchase_participation.png) ·
-[Full output map](outputs/README.md)
-
-## Measurement and econometric improvement
-
-The original adjusted comparisons use household expenditure-per-person
-quartiles, which can include the durable purchases being analyzed.
-A separately validated sensitivity recomputes the quartiles after
-subtracting the three selected annual durable-purchase categories.
-The **same 38,275 households** remain in the comparison.
-
-| Comparison | Adjusted odds ratio for any selected durable purchase |
+| Measure | Count |
 | --- | ---: |
-| Original total-expenditure control | 1.49 |
-| Expenditure excluding selected durable purchases | **1.58** |
-| Non-housing-only reports vs no recorded entry | 1.64 |
-| Housing-only reports vs no recorded entry | 1.08 |
+| Households in expenditure workbooks | 38,275 |
+| Loan-related financial-service records | 6,053 |
+| Households with at least one such record | 5,848 |
+| Housing-only reporting households | 556 |
+| Non-housing-only reporting households | 5,176 |
+| Households reporting both categories | 116 |
 
-The leave-out any-entry estimate has a province-clustered 95% interval
-of **1.26–1.98**. For the separate comparisons, the weights-only
-95% intervals are **1.50–1.81** (non-housing) and **0.82–1.42**
-(housing). These are observational associations; the 'no entry' group
-does **not** mean confirmed nonborrowers, and the analysis cannot
-attribute durable purchases to a particular loan.
+The survey-weighted reporting rate is **13.69%**. Loan-related items **126111** (housing) and **126112** (non-housing) come from Part 3, Table 13. The selected annual durable-purchase codes are **051**, **053**, and **071**. Six other expenditure categories are examined separately using their previous-month recall periods.
 
-[Full sensitivity results](outputs/tables/borrowing_measurement_and_control_sensitivity.csv) ·
-[Exclusive loan-report groups](outputs/tables/exclusive_loan_reporting_groups.csv) ·
-[Reconciliation checks](outputs/diagnostics/expenditure_leaveout_reconciliation.csv)
+Data are downloaded from a [fixed revision of the companion HEIS repository](https://github.com/aliye-nezhad/household-catastrophic-health-expenditure-R/tree/92c5f6162323eb08cee9d51463814542f9a12367/data/raw) with SHA-256 checks. Source survey files are not duplicated in this repository.
 
-## Initial reproduced findings
+[Data provenance](data/README.md) · [Variable definitions](docs/VARIABLE_MAP.md)
 
-The first successful complete run on November 14, 2026 links **all 5,848**
-households with candidate loan-related records to the **38,275** households
-in the rural and urban expenditure workbooks. The complete-case model sample
-contains **38,189** households.
+## Main results
 
-| Sample | Reported-entry households | Survey-weighted entry rate |
-| --- | ---: | ---: |
-| Rural (n = 19,390) | 2,530 | 11.29% |
-| Urban (n = 18,885) | 3,318 | 14.55% |
-| All households (n = 38,275) | 5,848 | 13.69% |
+The models use survey weights and control for household expenditure position, rural/urban residence, household-head age, gender and literacy, and household size.
 
-The model with household characteristics and expenditure quartiles finds a
-positive association between higher expenditure per person and reporting
-loan-related entries. The weighted food share is lower among households
-with such entries; the baseline adjusted food-share coefficient is
-approximately **-0.0119** (a 1.19 percentage-point difference), conditional
-on the stated controls. These are contemporaneous *associations*.
+| Specification | Adjusted odds ratio: any selected durable purchase |
+| --- | ---: |
+| Loan-related report, total-expenditure quartiles | 1.49 |
+| Loan-related report, leave-out expenditure quartiles | **1.58** |
+| Non-housing-only report versus no recorded entry | 1.64 |
+| Housing-only report versus no recorded entry | 1.08 |
 
-The research workflow includes additional province fixed-effect and
-non-housing-only sensitivity specifications. The latest aggregate regression
-tables and figure are available as downloadable artifacts of
-[GitHub Actions runs](https://github.com/aliye-nezhad/Household-Credit-Access-Expenditure-Allocation-R/actions). The first validated run is
-[November 14, 2026](https://github.com/aliye-nezhad/Household-Credit-Access-Expenditure-Allocation-R/actions/runs/43565878556).
+The leave-out specification subtracts selected gross durable purchases from annual total expenditure before ranking households. On the **same 38,275-household sample**, the combined adjusted odds ratio is **1.58** (province-clustered 95% interval **1.26–1.98**). The non-housing-only and housing-only comparisons have weights-only 95% intervals of **1.50–1.81** and **0.82–1.42**, respectively.
 
+The positive association is more evident for non-housing reports, but the data cannot establish that a loan paid for a durable purchase. The absence of a loan-related entry does not prove that a household had no borrowing.
+
+[Research note](outputs/RESEARCH_NOTE.md) · [Main robustness table](outputs/tables/leaveout_primary_robustness.csv) · [All model comparisons](outputs/tables/borrowing_measurement_and_control_sensitivity.csv) · [Results index](outputs/README.md)
+
+## Methods and limitations
+
+The analysis includes survey-weighted descriptive statistics and logistic models, alternative expenditure controls, mutually exclusive loan-report groups, province-adjusted specifications, and province-clustered variance sensitivities. Source record counts, household joins, model samples, and reported output values are checked against documented expectations.
+
+The study is a single cross-section. Unobserved household characteristics, simultaneous financial decisions, and incomplete credit coverage restrict interpretation. The original survey PSU and strata definitions are not verified; province-clustered intervals do **not** reconstruct its complete sampling design. No causal effects or monetary-policy transmission estimates are claimed.
+
+[Methods and identification limits](docs/METHODOLOGY.md)
+
+## Reproducibility
+
+The project runs in a locked **R 4.4.3** environment managed by [Pixi](https://pixi.sh/). On x86-64 Linux (or Windows through WSL2), install Pixi and run this from the repository root:
+
+~~~text
+pixi run --locked reproduce
+~~~
+
+This downloads and verifies pinned source files, processes the required survey tables, estimates the models, validates aggregate outputs, and writes a dated run under `reproduced/run-*/`. GitHub Actions applies the same checks. Validated aggregate tables and figures are available under [outputs/](outputs/README.md).
 
 ## Repository structure
 
-- code/analysis.R: dataset linkage, weighted descriptives, models, and figure.
-- code/extended_analysis.R: detailed monthly spending and lender-source groups.
-- code/measurement_sensitivity.R: exclusive loan types and matched expenditure-control alternatives.
-- code/validate.R: source-count and output checks.
-- scripts/reproduce.sh: isolated download, verification, and execution.
-- docs/METHODOLOGY.md: constructs, identification limits, and inference.
-- docs/VARIABLE_MAP.md: source fields, recall periods, outcomes, and exclusions.
-- data/source_sha256.txt: pinned source archive hashes.
-- data/README.md: survey provenance.
-- .github/workflows/reproduce.yml: automated locked execution.
+~~~text
+├── code/
+│   ├── analysis.R
+│   ├── extended_analysis.R
+│   ├── measurement_sensitivity.R
+│   ├── write_research_note.R
+│   └── validate.R
+├── data/
+│   ├── README.md
+│   └── source_sha256.txt
+├── docs/
+│   ├── METHODOLOGY.md
+│   └── VARIABLE_MAP.md
+├── outputs/
+│   ├── RESEARCH_NOTE.md
+│   ├── RESULTS.md
+│   ├── tables/
+│   ├── figures/
+│   └── diagnostics/
+├── scripts/reproduce.sh
+├── .github/workflows/reproduce.yml
+├── .gitattributes
+├── pixi.toml
+├── pixi.lock
+├── CITATION.cff
+└── LICENSE
+~~~
 
-Validated aggregate tables, figures, and a concise research note are retained
-under **[outputs/](outputs/README.md)** and are also downloadable as
-GitHub Actions artifacts. No raw or record-level survey files are published.
-The committed snapshot is refreshed only after a fully validated run.
+## Author
 
-## Reproduction
-
-On x86-64 Linux (or WSL2 with Linux tooling), install
-[Pixi](https://pixi.sh/) and run:
-
-    pixi run --locked reproduce
-
-The task downloads only the required survey archives from the public source
-repository, validates their checksums, extracts temporary working copies,
-and writes a new validated run to reproduced/run-*/. GitHub Actions performs
-the same procedure and uploads its outputs as a downloadable artifact.
-
-The first run requires internet access to retrieve the pinned source inputs
-and conda-forge packages.
-
-## Scope
-
-This repository is a distinct household-finance study. It does not change
-the companion catastrophic-health-expenditure repository. The supplied 1392
-questionnaire uses the same relevant questions and layout as the 1393 survey,
-as confirmed for this project. The loan-item definitions are applied to the
-1393 Access records, with the interpretation restricted to reported loan-related
-financial-service entries.
+**Aliye Nezhad** · [GitHub profile](https://github.com/aliye-nezhad)
 
 ## License
 
-Code and documentation: MIT License. The underlying household survey
-files are separate source data and are not covered by this license.
+The R analysis code and documentation are available under the [MIT License](LICENSE). Underlying household survey datasets remain subject to their original distribution and use terms and are **not** licensed by this repository.

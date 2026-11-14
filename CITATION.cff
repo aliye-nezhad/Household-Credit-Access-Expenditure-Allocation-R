@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the repository if you use its code or findings."
+title: "Household Borrowing and Durable-Goods Purchases"
+type: software
+authors:
+  - family-names: Nezhad
+    given-names: Aliye
+repository-code: "https://github.com/aliye-nezhad/Household-Credit-Access-Expenditure-Allocation-R"
+date-released: 2026-11-14
+license: MIT
