@@ -1,0 +1,5 @@
+"residence","loan_purpose","records","distinct_households","median_amount_rials","p25_amount_rials","p75_amount_rials","median_charge_rials","source_reported_fraction","fraction_acquisition_method_1","fraction_charge_exactly_2_5_percent"
+"Rural","Housing",295,293,1e+08,5e+07,1.25e+08,2500000,0.979661016949153,1,0.949152542372881
+"Rural","Non-housing",2297,2273,5e+07,3e+07,1e+08,1250000,0.968219416630387,0.998693948628646,0.896386591205921
+"Urban","Housing",379,379,1e+08,5e+07,2e+08,2750000,0.965699208443272,0.997361477572559,0.886543535620053
+"Urban","Non-housing",3082,3019,5e+07,3e+07,1e+08,1500000,0.960415314730694,1,0.892602206359507

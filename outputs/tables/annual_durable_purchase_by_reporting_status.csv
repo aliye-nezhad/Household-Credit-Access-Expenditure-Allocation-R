@@ -1,0 +1,13 @@
+"purchase_group","residence","reported_entry","households","positive_purchase_households","weighted_purchase_incidence","weighted_mean_annual_purchase_rials"
+"Furniture and furnishings","Rural",0,16860,1927,0.106655972691247,1064464.23033789
+"Furniture and furnishings","Rural",1,2530,537,0.208113911157303,2772280.97344483
+"Furniture and furnishings","Urban",0,15567,2094,0.136005262415058,1685602.26148257
+"Furniture and furnishings","Urban",1,3318,790,0.191109228887923,3423339.81434532
+"Household appliances","Rural",0,16860,3163,0.193840043167501,1380491.35444165
+"Household appliances","Rural",1,2530,725,0.306081662833596,3670068.76537088
+"Household appliances","Urban",0,15567,2769,0.18470942553395,1493303.18634763
+"Household appliances","Urban",1,3318,899,0.289927644278485,3759978.98742128
+"Personal transport equipment","Rural",0,16860,582,0.0350291555061655,2801913.53819464
+"Personal transport equipment","Rural",1,2530,217,0.0908916993137399,11408441.2803662
+"Personal transport equipment","Urban",0,15567,719,0.0506447571015444,7080424.45074002
+"Personal transport equipment","Urban",1,3318,338,0.106805456317998,16376135.3133637

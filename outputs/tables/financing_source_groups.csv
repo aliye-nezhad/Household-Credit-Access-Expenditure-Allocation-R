@@ -1,0 +1,21 @@
+"residence","purpose","source_group","records","share_within_purpose"
+"Rural","Housing","Explicit bank",62,0.210169491525424
+"Rural","Housing","Fund / other institution",10,0.0338983050847458
+"Rural","Housing","Missing",6,0.0203389830508475
+"Rural","Housing","Recognizable bank shorthand",199,0.674576271186441
+"Rural","Housing","Unclassified / ambiguous",18,0.0610169491525424
+"Rural","Non-housing","Explicit bank",607,0.264257727470614
+"Rural","Non-housing","Fund / other institution",381,0.16586852416195
+"Rural","Non-housing","Missing",73,0.0317805833696125
+"Rural","Non-housing","Recognizable bank shorthand",1057,0.460165433173705
+"Rural","Non-housing","Unclassified / ambiguous",179,0.0779277318241184
+"Urban","Housing","Explicit bank",105,0.277044854881267
+"Urban","Housing","Fund / other institution",15,0.0395778364116095
+"Urban","Housing","Missing",13,0.0343007915567282
+"Urban","Housing","Recognizable bank shorthand",213,0.562005277044855
+"Urban","Housing","Unclassified / ambiguous",33,0.0870712401055409
+"Urban","Non-housing","Explicit bank",805,0.261194029850746
+"Urban","Non-housing","Fund / other institution",599,0.194354315379624
+"Urban","Non-housing","Missing",122,0.0395846852693056
+"Urban","Non-housing","Recognizable bank shorthand",1237,0.401362751460091
+"Urban","Non-housing","Unclassified / ambiguous",319,0.103504218040234

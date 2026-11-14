@@ -1,0 +1,5 @@
+"loan_purpose","residence","records","median_reported_amount_rials","p25","p75"
+"Housing","Rural",295,1e+08,5e+07,1.25e+08
+"Housing","Urban",379,1e+08,5e+07,2e+08
+"Non-housing","Rural",2297,5e+07,3e+07,1e+08
+"Non-housing","Urban",3082,5e+07,3e+07,1e+08

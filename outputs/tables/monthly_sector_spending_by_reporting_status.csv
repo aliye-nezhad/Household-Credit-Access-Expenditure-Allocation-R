@@ -1,0 +1,25 @@
+"sector","residence","reported_entry","households","weighted_purchase_incidence","weighted_mean_monthly_purchase_rials"
+"Clothing and footwear","Rural",0,16860,0.478729039500288,628802.077745265
+"Clothing and footwear","Rural",1,2530,0.596544468678479,1028609.81977978
+"Clothing and footwear","Urban",0,15567,0.489112146252251,837902.070819861
+"Clothing and footwear","Urban",1,3318,0.608940861737069,1172833.14402545
+"Communications","Rural",0,16860,0.917771670013253,271177.843303602
+"Communications","Rural",1,2530,0.986417884086408,387796.403368366
+"Communications","Urban",0,15567,0.977249020442661,448536.064549027
+"Communications","Urban",1,3318,0.992681555224012,552377.925118927
+"Furnishings and household equipment","Rural",0,16860,0.928259358571384,322268.600976479
+"Furnishings and household equipment","Rural",1,2530,0.921424799658055,507243.809167971
+"Furnishings and household equipment","Urban",0,15567,0.877206215995109,375473.035706879
+"Furnishings and household equipment","Urban",1,3318,0.919170603561756,484542.844288211
+"Prepared food and accommodation","Rural",0,16860,0.29010381777989,108057.406900258
+"Prepared food and accommodation","Rural",1,2530,0.367294371072267,140705.81305556
+"Prepared food and accommodation","Urban",0,15567,0.340950007138046,233116.338363787
+"Prepared food and accommodation","Urban",1,3318,0.439053702606926,503558.625643379
+"Recreation and culture","Rural",0,16860,0.287181824520602,56057.5892449004
+"Recreation and culture","Rural",1,2530,0.396548947996612,95619.9635354603
+"Recreation and culture","Urban",0,15567,0.378429247401994,117757.552786467
+"Recreation and culture","Urban",1,3318,0.46210776022952,171545.054233393
+"Transport","Rural",0,16860,0.91574116087789,576833.332307004
+"Transport","Rural",1,2530,0.974602631238505,853307.446579548
+"Transport","Urban",0,15567,0.961462136951443,827867.612649666
+"Transport","Urban",1,3318,0.984335013296415,1135317.50314871
