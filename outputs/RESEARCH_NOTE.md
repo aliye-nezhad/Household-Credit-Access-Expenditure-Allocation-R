@@ -52,6 +52,8 @@ a recorded loan-related financial-service entry.
 
 ![Selected durable purchases, by residence and reporting status](figures/annual_durable_purchase_participation.png)
 
+The item-level audit excludes 874 repair, cleaning, installation, or rental entries from the broader durable-category code families.
+
 ## 3. Conditional associations
 
 We estimate survey-weighted logistic models for the presence of each 
@@ -121,6 +123,18 @@ For the combined durable-purchase outcome, the alternative comparisons are:
 | Non-housing only vs no entry | 1.71 | 1.55–1.87 |
 | Housing only vs no entry | 1.16 | 0.88–1.53 |
 
+### Direct housing versus non-housing coefficient test
+
+The next contrast compares the non-housing-only and housing-only
+coefficients **in a single joint model** with all four reporting
+groups and the same household sample. Exponentiating the coefficient
+difference gives a ratio of odds ratios. This is not a causal contrast.
+
+| Variance assumption | Ratio of odds ratios | 95% interval | p-value |
+| --- | ---: | ---: | ---: |
+| Weights-only | 1.46 | 1.10–1.94 | 0.009 |
+| Province-clustered | 1.46 | 1.16–1.84 | 0.003 |
+
 The control-substitution exercise does not remove selection bias,
 prove that a loan paid for a purchase, or identify a causal effect.
 Province clustering remains a sensitivity approximation rather than
@@ -175,6 +189,8 @@ or household microdata are published in the results.
 - [Annual durable outcomes](tables/annual_durable_purchase_associations.csv)
 - [Comparable expenditure-control sensitivities](tables/borrowing_measurement_and_control_sensitivity.csv)
 - [Exclusive loan-report classifications](tables/exclusive_loan_reporting_groups.csv)
+- [Direct loan-type contrast](tables/loan_type_joint_contrast.csv)
+- [Questionnaire-to-code audit](../docs/QUESTIONNAIRE_TRACE.md)
 - [Monthly sector outcomes](tables/sector_purchase_associations.csv)
 - [Financing-source diagnostics](tables/financing_source_groups.csv)
 
