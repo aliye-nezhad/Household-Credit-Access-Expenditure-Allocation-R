@@ -1,0 +1,81 @@
+# Research design and measurement
+
+## Question
+
+How do the household and geographic characteristics of survey respondents who
+report a housing- or non-housing-loan-related financial-service entry differ from
+those who do not report such an entry? How does observed expenditure composition
+vary with that reported status?
+
+The analysis is descriptive and based on a single survey wave: HEIS 1393 (2014–15).
+
+## Loan measures
+
+The original Access database contains rural and urban Part 3 Table 13 records
+(R93P3S13 and U93P3S13). The candidate loan-related item codes are:
+
+- 126111: housing-loan-related financial-service charge.
+- 126112: non-housing-loan-related financial-service charge.
+
+Based on the 1392 questionnaire and 1393 record patterns, DYCOL02 is treated as
+a candidate reported loan amount, DYCOL03 as the reported financing source, and
+DYCOL05 as the financial-service charge. A year-specific 1393 questionnaire or
+official codebook is still needed to definitively document these mappings.
+
+The binary outcome is **presence of at least one of these two Table 13 entries**.
+A zero means no recorded entry of this kind. It does not establish that a
+household did not borrow, lacked credit access, or had no outstanding debt.
+Reported loan amounts are not necessarily new lending in 1393 or outstanding
+principal at the interview date. They cannot be summed into a reliable stock
+of household debt. Reported entry amounts are described separately, while
+maximum and sum fields are retained only for the internal household aggregation.
+
+About 90% of loan-charge records have a charge-to-amount ratio of 2.5%.
+These charges must not be interpreted as loan interest rates or contractual APRs.
+Financing-source groups are conservative text-derived diagnostics, not validated
+banking-sector identifiers.
+
+## Samples and joining
+
+Raw survey roster: 39,856 household keys (20,100 rural and 19,756 urban).
+Two source household workbooks: 38,275 records (19,390 rural; 18,885 urban).
+Loan-related Table 13 observations: 6,053 records, 5,848 distinct households.
+The analysis reports loan-to-roster and loan-to-workbook matches separately.
+Sample exclusions for positive weights, valid spending, food shares, and
+controls are explicitly recorded.
+
+Loan records are linked using the residence label and the original
+11-digit household Address. No row-level survey data are published.
+
+## Expenditure measures
+
+The household workbook's GHazineh and VKhorak are treated as annual nominal
+total and food expenditure. Food share is VKhorak / GHazineh; nonfood share
+is its accounting complement. Food shares are restricted to [0, 1].
+Expenditure position is estimated using weighted quartiles of annual total
+expenditure divided by household size. This is **not an income ranking**.
+The ambiguous C11 and C11New fields are deliberately not used.
+
+Food expenditure is not necessarily independent of borrowing, so differences
+in food shares by borrowing-report status are not causal effects.
+
+## Estimation
+
+Descriptives use positive household sampling weights. The regression for
+reporting a loan-related entry is a survey-weighted quasibinomial GLM;
+a second weighted linear model describes conditional food-budget-share
+differences. Controls are residence, expenditure quartile, household-head
+age, gender, literacy, and household size.
+
+The available source does not establish the actual survey PSUs and strata.
+Variance estimates use a weights-only independent-household approximation
+and are not advertised as fully design-consistent. No causal identification
+strategy or policy-shock variation is claimed.
+
+## Reproducibility
+
+The project retrieves three specific survey archives from the unchanged
+source repository at commit 92c5f6162323eb08cee9d51463814542f9a12367.
+Each downloaded archive is checked against the known SHA-256 checksum.
+A locked Linux environment runs the scripts, validates count invariants,
+and retains aggregate CSVs and a figure as CI artifacts.

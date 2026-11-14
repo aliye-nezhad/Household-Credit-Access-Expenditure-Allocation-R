@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+umask 077
+cd "$(dirname "$0")/.."
+root="$PWD"
+source_sha="92c5f6162323eb08cee9d51463814542f9a12367"
+source_base="https://raw.githubusercontent.com/aliye-nezhad/household-catastrophic-health-expenditure-R/$source_sha/data/raw"
+seven_zip="$(command -v 7zz || command -v 7z)"
+test -n "$seven_zip" || { echo "7-Zip is required." >&2; exit 1; }
+command -v mdb-export >/dev/null
+command -v Rscript >/dev/null
+command -v curl >/dev/null
+
+mkdir -p reproduced
+work="$(mktemp -d "$root/reproduced/.work-XXXXXXXX")"
+trap 'rm -rf "$work"' EXIT
+mkdir -p "$work/inputs" "$work/raw" "$work/results"
+for filename in 93.rar R93.rar U93.rar; do
+  curl --fail --location --silent --show-error --retry 3 \
+    "$source_base/$filename" --output "$work/raw/$filename"
+done
+(
+  cd "$work"
+  sha256sum --check "$root/data/source_sha256.txt"
+)
+"$seven_zip" e "$work/raw/93.rar" -o"$work/inputs" -y >/dev/null
+"$seven_zip" e "$work/raw/R93.rar" -o"$work/inputs" -y >/dev/null
+"$seven_zip" e "$work/raw/U93.rar" -o"$work/inputs" -y >/dev/null
+test -s "$work/inputs/93.mdb"
+test -s "$work/inputs/R93.xls"
+test -s "$work/inputs/U93.xls"
+for table in R93Data U93Data R93P3S13 U93P3S13; do
+  mdb-export "$work/inputs/93.mdb" "$table" > "$work/inputs/$table.csv"
+  test -s "$work/inputs/$table.csv"
+done
+Rscript --vanilla code/analysis.R "$work/inputs" "$work/results"
+Rscript --vanilla code/validate.R "$work/results"
+{
+  printf 'Source Git commit: %s\n' "$source_sha"
+  sha256sum "$work/raw/93.rar" "$work/raw/R93.rar" "$work/raw/U93.rar"
+  sha256sum pixi.lock code/analysis.R code/validate.R
+} > "$work/results/diagnostics/input_hashes.txt"
+run="$root/reproduced/run-$(date -u +%Y%m%dT%H%M%SZ)-$$"
+mv "$work/results" "$run"
+echo "Validated results: $run"

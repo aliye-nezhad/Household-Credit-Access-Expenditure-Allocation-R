@@ -1,0 +1,16 @@
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.DS_Store
+Thumbs.db
+.pixi/
+reproduced/
+*.mdb
+*.accdb
+*.xls
+*.rar
+data/raw/
+data/processed/
+*.tmp
+*.log
