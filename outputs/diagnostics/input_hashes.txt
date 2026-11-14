@@ -1,10 +1,11 @@
 Source Git commit: 92c5f6162323eb08cee9d51463814542f9a12367
-6f889737358a80905e7a4bfcdcf8b7bd1bea81c58e8355132a39d68664aa10d4  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-7hPoG2VD/raw/93.rar
-8247e8d741e7172bfcaef49363b1394da1e1ea78c686e02478c24f4dc8384092  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-7hPoG2VD/raw/R93.rar
-c2d58629bf839207729c349c7d006db9267c28f0ad879898615b0f56aca41090  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-7hPoG2VD/raw/U93.rar
+6f889737358a80905e7a4bfcdcf8b7bd1bea81c58e8355132a39d68664aa10d4  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-9825a27826e/raw/93.rar
+8247e8d741e7172bfcaef49363b1394da1e1ea78c686e02478c24f4dc8384092  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-9825a27826e/raw/R93.rar
+c2d58629bf839207729c349c7d006db9267c28f0ad879898615b0f56aca41090  /home/runner/work/Household-Credit-Access-Expenditure-Allocation-R/Household-Credit-Access-Expenditure-Allocation-R/reproduced/.work-9825a27826e/raw/U93.rar
 675387d88d93ac3fe50cc4c98c3e45d73024a58addc3cc4eb97abfd82108d461  pixi.lock
 0e1301f9fb643b88aa7361e70943dccfd03c9d17577ca6d4f0e5aa6856871645  code/analysis.R
 2a204e5b7a1796bba7468941fbdddefb0f0b84645025653e2149659e88ec6587  code/extended_analysis.R
 751dcf7a6de545a5adef7e05fe939f0e15d468b789f652e4bf96faefa5e3e8ba  code/measurement_sensitivity.R
 89dbaa5d25affa10c53bcc0b8eb025e484bb36fdcd9ba02996616b5d0dc5a5df  code/write_research_note.R
 5896a94414a3a7eb243eba8f245be998d3f2bd2bafe27e1b18f127bc846e294c  code/validate.R
+c716f2ae67cb9f16949f8b9d3c7fd6330f0199b6a5b8dea4f443696132319efb  scripts/reproduce.R
