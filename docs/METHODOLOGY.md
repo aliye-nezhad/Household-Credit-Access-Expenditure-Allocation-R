@@ -75,6 +75,43 @@ Variance estimates use a weights-only independent-household approximation
 and are not advertised as fully design-consistent. No causal identification
 strategy or policy-shock variation is claimed.
 
+## Additional monthly expenditure categories
+
+The supplied questionnaire labels Part 3 Sections 03 (clothing and footwear),
+05 (furnishings and household equipment), 07 (transport), 08
+(communications), 09 (recreation and culture), and 11 (prepared food and
+accommodation) as **previous-month** expenditure modules. In these tables
+DYCOL01 is the expenditure-item code, DYCOL02 is the acquisition method,
+and DYCOL03 is the reported nominal amount. Purchased entries have
+DYCOL02 = 1. We retain all source household keys and then left-join
+aggregated purchased spending to the expenditure-workbook sample.
+
+For each of these six categories, the supplemental analysis reports the
+share of households with positive purchased spending in the reference month,
+and the weighted mean nominal monthly amount, separately by residence and
+loan-entry status. Zero purchased entries are coded as zero **recorded
+spending in the particular module**, not as absence of consumption.
+Noncash acquisition methods are excluded from the purchased-spending
+measure. Source rows and unmatched households are diagnosed in the run.
+
+These sections do not constitute an exhaustive consumption basket.
+Large occasional purchases also make month-of-interview observations noisy.
+Thus we do not multiply monthly durable-goods purchases by twelve or
+claim these are annual household budget allocations. Associations with
+loan-report status are cross-sectional and may reflect income, preferences,
+wealth, or other unobserved variables. Six additional weighted logit models
+describe purchase participation conditional on expenditure-per-person
+quartile, residence and observed demographics; their exploratory p-values
+are additionally adjusted using Benjamini-Hochberg across the six outcomes.
+
+## Financing-source interpretation
+
+The source of a loan is a free-text response. Distinguishing explicitly named
+banks, recognizable bank name shorthand, loan funds/institutions, and ambiguous
+responses requires an explicitly documented heuristic classification.
+It must not be interpreted as verified lender market share or complete
+coverage of formal lending.
+
 ## Reproducibility
 
 The project retrieves three specific survey archives from the unchanged

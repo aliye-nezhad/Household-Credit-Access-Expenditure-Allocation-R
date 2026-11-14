@@ -35,9 +35,17 @@ and processed without modifying the related repository.
    expenditure per household member.
 3. Describe reported amount distributions and conservatively categorized
    financing-source text.
-4. Compare household food and nonfood budget shares across reporting groups.
-5. Estimate a weighted logit model of reporting an entry and a weighted
-   linear model of food budget share, with clearly stated limitations.
+4. Compare household food and nonfood budget shares, together with six
+   separately measured previous-month expenditure categories.
+5. Estimate weighted logit models of reported loan-related entries and
+   of purchase participation in the six expenditure categories, plus a
+   weighted linear model of food-budget share.
+6. Apply province fixed-effect and non-housing-only sensitivity specifications,
+   and report exploratory financing-source classifications.
+
+The six additional expenditure sections measure purchases during the
+**previous month**, not full-year spending. Their participation results
+are not interpreted as causal consumption responses to credit.
 
 The survey's full sampling design is not established here; reported regression
 standard errors use a weights-only approximation. This is not a study of
@@ -73,6 +81,7 @@ tables and figure are available as downloadable artifacts of
 ## Repository structure
 
 - code/analysis.R: dataset linkage, weighted descriptives, models, and figure.
+- code/extended_analysis.R: detailed monthly spending and lender-source groups.
 - code/validate.R: source-count and output checks.
 - scripts/reproduce.sh: isolated download, verification, and execution.
 - docs/METHODOLOGY.md: constructs, identification limits, and inference.
@@ -80,7 +89,7 @@ tables and figure are available as downloadable artifacts of
 - data/README.md: survey provenance.
 - .github/workflows/reproduce.yml: automated locked execution.
 
-Generated aggregate tables and a figure are delivered as GitHub Actions
+Generated aggregate tables and figures are delivered as GitHub Actions
 artifacts rather than committing unpublished household-level data.
 
 ## Reproduction

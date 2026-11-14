@@ -29,11 +29,15 @@ done
 test -s "$work/inputs/93.mdb"
 test -s "$work/inputs/R93.xls"
 test -s "$work/inputs/U93.xls"
-for table in R93Data U93Data R93P3S13 U93P3S13; do
+for table in R93Data U93Data R93P3S13 U93P3S13 \
+  R93P3S03 U93P3S03 R93P3S05 U93P3S05 \
+  R93P3S07 U93P3S07 R93P3S08 U93P3S08 \
+  R93P3S09 U93P3S09 R93P3S11 U93P3S11; do
   mdb-export "$work/inputs/93.mdb" "$table" > "$work/inputs/$table.csv"
   test -s "$work/inputs/$table.csv"
 done
 Rscript --vanilla code/analysis.R "$work/inputs" "$work/results"
+Rscript --vanilla code/extended_analysis.R "$work/inputs" "$work/results"
 Rscript --vanilla code/validate.R "$work/results"
 {
   printf 'Source Git commit: %s\n' "$source_sha"
@@ -51,3 +55,9 @@ echo "--- Weighted food budget share by reporting status ---"
 cat "$run/tables/budget_composition_by_reporting_status.csv"
 echo "--- Model coefficients (first 15 lines) ---"
 head -n 15 "$run/tables/regression_coefficients.csv"
+echo "--- Six-sector purchase associations ---"
+cat "$run/tables/sector_purchase_associations.csv"
+echo "--- Financing-source classifications (aggregate) ---"
+cat "$run/tables/financing_source_groups.csv"
+echo "--- Monthly sector-spending differences ---"
+cat "$run/tables/monthly_sector_spending_differences.csv"

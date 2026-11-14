@@ -17,7 +17,15 @@ required <- c(
   "diagnostics/lender_source_heuristic.csv",
   "diagnostics/expenditure_quartile_boundaries.csv",
   "diagnostics/session_info.txt",
-  "figures/reported_entries_by_expenditure_quartile.png"
+  "figures/reported_entries_by_expenditure_quartile.png",
+  "figures/monthly_sector_purchase_participation.png",
+  "tables/financing_source_groups.csv",
+  "tables/monthly_sector_spending_by_reporting_status.csv",
+  "tables/monthly_sector_spending_differences.csv",
+  "tables/sector_purchase_associations.csv",
+  "diagnostics/sector_source_coverage.csv",
+  "diagnostics/source_text_classification_coverage.csv",
+  "diagnostics/extended_analysis_notes.txt"
 )
 paths <- file.path(out, required)
 if (any(!file.exists(paths) | file.info(paths)$size <= 0L))
@@ -52,4 +60,24 @@ stopifnot(setequal(unique(co$model),
 png <- readBin(file.path(out, "figures/reported_entries_by_expenditure_quartile.png"),
                "raw", 8)
 stopifnot(identical(png, as.raw(c(137, 80, 78, 71, 13, 10, 26, 10))))
+source_groups <- read.csv(file.path(out, "tables/financing_source_groups.csv"))
+stopifnot(sum(source_groups$records) == 6053,
+          all(source_groups$share_within_purpose >= 0 &
+              source_groups$share_within_purpose <= 1))
+spending <- read.csv(file.path(out, "tables/monthly_sector_spending_by_reporting_status.csv"))
+stopifnot(nrow(spending) == 24L,
+          all(spending$households > 0),
+          all(spending$weighted_purchase_incidence >= 0 &
+              spending$weighted_purchase_incidence <= 1),
+          all(spending$weighted_mean_monthly_purchase_rials >= 0))
+purchase_models <- read.csv(file.path(out, "tables/sector_purchase_associations.csv"))
+stopifnot(nrow(purchase_models) == 6L,
+          all(purchase_models$n == 38275L |
+              purchase_models$n == 38189L),
+          all(is.finite(purchase_models$odds_ratio)),
+          all(purchase_models$odds_ratio > 0),
+          all(purchase_models$ci95_lower > 0),
+          all(purchase_models$ci95_upper >= purchase_models$ci95_lower),
+          all(purchase_models$fdr_bh_p_value >= 0 &
+              purchase_models$fdr_bh_p_value <= 1))
 message("All output and source-coverage checks passed.")
