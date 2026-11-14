@@ -38,12 +38,14 @@ for table in R93Data U93Data R93P3S13 U93P3S13 \
 done
 Rscript --vanilla code/analysis.R "$work/inputs" "$work/results"
 Rscript --vanilla code/extended_analysis.R "$work/inputs" "$work/results"
+Rscript --vanilla code/measurement_sensitivity.R "$work/inputs" "$work/results"
 Rscript --vanilla code/write_research_note.R "$work/results"
 Rscript --vanilla code/validate.R "$work/results"
 {
   printf 'Source Git commit: %s\n' "$source_sha"
   sha256sum "$work/raw/93.rar" "$work/raw/R93.rar" "$work/raw/U93.rar"
-  sha256sum pixi.lock code/analysis.R code/validate.R
+  sha256sum pixi.lock code/analysis.R code/extended_analysis.R \
+    code/measurement_sensitivity.R code/write_research_note.R code/validate.R
 } > "$work/results/diagnostics/input_hashes.txt"
 run="$root/reproduced/run-$(date -u +%Y%m%dT%H%M%SZ)-$$"
 mv "$work/results" "$run"
@@ -64,5 +66,11 @@ echo "--- Six-sector purchase associations ---"
 cat "$run/tables/sector_purchase_associations.csv"
 echo "--- Financing-source classifications (aggregate) ---"
 cat "$run/tables/financing_source_groups.csv"
+echo "--- Measurement and expenditure-control sensitivity ---"
+cat "$run/tables/leaveout_primary_robustness.csv"
+echo "--- Exclusive loan-type reporting groups ---"
+cat "$run/tables/exclusive_loan_reporting_groups.csv"
+echo "--- Leave-out expenditure reconciliation ---"
+cat "$run/diagnostics/expenditure_leaveout_reconciliation.csv"
 echo "--- Monthly sector-spending differences ---"
 cat "$run/tables/monthly_sector_spending_differences.csv"

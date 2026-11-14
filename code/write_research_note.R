@@ -14,6 +14,11 @@ source <- read_table("diagnostics/sample_linkage.csv")
 fee <- read_table("diagnostics/loan_field_diagnostics.csv")
 sz <- read_table("diagnostics/model_sample_sizes.csv")
 sector <- read_table("tables/sector_purchase_associations.csv")
+loan_types <- read_table("tables/exclusive_loan_reporting_groups.csv")
+sensitivity <- read_table("tables/borrowing_measurement_and_control_sensitivity.csv")
+leaveout <- read_table("tables/leaveout_primary_robustness.csv")
+reconciliation <- read_table("diagnostics/expenditure_leaveout_reconciliation.csv")
+
 
 cell <- function(x) sprintf("%.2f",x)
 pct <- function(x) sprintf("%.2f%%",100*x)
@@ -175,6 +180,80 @@ rows <- c(rows,
  "related, and both may be endogenous to household financial decisions."
  ),
  "",
+ "### Measurement and expenditure-control sensitivity",
+ "",
+ "Because annual total expenditure includes some of the purchases being",
+ "modeled, the baseline quartile control may mechanically overlap with",
+ "the dependent variable. An additional specification subtracts gross",
+ "purchases in code families 051, 053, and 071 before computing weighted",
+ "expenditure-per-person quartiles. This is an accounting sensitivity,",
+ "not a validated measure of nondurable expenditure, income, or wealth.",
+ "The same eligible households are used to compare the total and",
+ "leave-out expenditure controls.",
+ "",
+ paste0(
+ "The leave-out comparison retains ",
+ nfmt(sum(reconciliation$leaveout_eligible)),
+ " households; ",
+ nfmt(sum(reconciliation$households)-sum(reconciliation$leaveout_eligible)),
+ " are excluded by the leave-out or control-variable requirements."
+ ),
+ "",
+ "| Annual outcome | Total-expenditure OR (same sample) | Leave-out OR | Province-clustered 95% interval (leave-out) |",
+ "| --- | ---: | ---: | ---: |"
+)
+for(cat in leaveout$outcome) {
+ full <- subset(sensitivity,outcome==cat & loan_comparison=="any" &
+                quartile_measure=="full")
+ alt <- subset(leaveout,outcome==cat)
+ if(nrow(full)!=1L || nrow(alt)!=1L)
+   stop("Missing matched expenditure-control sensitivity for ",cat)
+ rows <- c(rows,sprintf("| %s | %s | %s | %s–%s |",
+                        cat,cell(full$odds_ratio),cell(alt$odds_ratio),
+                        cell(alt$province_cluster_ci95_lower),
+                        cell(alt$province_cluster_ci95_upper)))
+}
+rows <- c(rows,
+ "",
+ "As a distinct measurement check, households are classified into four",
+ "mutually exclusive groups: no loan-related entry, housing-only,",
+ "non-housing-only, or both types. Housing-only and non-housing-only",
+ "associations are estimated separately against households without an",
+ "entry. These are not comparisons with verified nonborrowers.",
+ "",
+ "| Residence | Reported loan-item group | Households | Weighted group share |",
+ "| --- | --- | ---: | ---: |"
+)
+for(i in seq_len(nrow(loan_types))) {
+ x <- loan_types[i,]
+ rows <- c(rows,sprintf("| %s | %s | %s | %s |",
+                        x$residence,x$loan_group,
+                        nfmt(x$households),pct(x$weighted_fraction)))
+}
+rows <- c(rows,
+ "",
+ "For the combined durable-purchase outcome, the alternative comparisons are:",
+ "",
+ "| Loan-report comparison | Leave-out adjusted OR | 95% interval (weights-only) |",
+ "| --- | ---: | ---: |"
+)
+for(k in c("nonhousing_only_vs_none","housing_only_vs_none")) {
+ x <- subset(sensitivity,outcome=="Any selected durable group" &
+             loan_comparison==k & quartile_measure=="leaveout")
+ if(nrow(x)!=1L) stop("Missing loan-type comparison: ",k)
+ label <- if(k=="nonhousing_only_vs_none") "Non-housing only vs no entry" else
+                                           "Housing only vs no entry"
+ rows <- c(rows,sprintf("| %s | %s | %s–%s |",
+                        label,cell(x$odds_ratio),
+                        cell(x$ci95_lower),cell(x$ci95_upper)))
+}
+rows <- c(rows,
+ "",
+ "The control-substitution exercise does not remove selection bias,",
+ "prove that a loan paid for a purchase, or identify a causal effect.",
+ "Province clustering remains a sensitivity approximation rather than",
+ "the official survey design.",
+ "",
  "### Additional monthly purchase categories",
  "",
  "The questionnaire separately records previous-month spending on clothing ",
@@ -235,6 +314,8 @@ rows <- c(rows,
  "- [Reproducibility instructions](../README.md)",
  "- [Aggregate model coefficients](tables/regression_coefficients.csv)",
  "- [Annual durable outcomes](tables/annual_durable_purchase_associations.csv)",
+ "- [Comparable expenditure-control sensitivities](tables/borrowing_measurement_and_control_sensitivity.csv)",
+ "- [Exclusive loan-report classifications](tables/exclusive_loan_reporting_groups.csv)",
  "- [Monthly sector outcomes](tables/sector_purchase_associations.csv)",
  "- [Financing-source diagnostics](tables/financing_source_groups.csv)",
  "",

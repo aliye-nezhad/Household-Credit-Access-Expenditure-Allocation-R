@@ -28,6 +28,16 @@ required <- c(
   "tables/monthly_sector_spending_by_reporting_status.csv",
   "tables/monthly_sector_spending_differences.csv",
   "tables/sector_purchase_associations.csv",
+  "tables/borrowing_measurement_and_control_sensitivity.csv",
+  "tables/leaveout_primary_robustness.csv",
+  "tables/exclusive_loan_reporting_groups.csv",
+  "diagnostics/loan_type_field_audit.csv",
+  "diagnostics/loan_entry_multiplicity.csv",
+  "diagnostics/expenditure_leaveout_reconciliation.csv",
+  "diagnostics/alternative_expenditure_quartiles.csv",
+  "diagnostics/alternative_rank_crosswalk.csv",
+  "diagnostics/measurement_sensitivity_summary.csv",
+  "diagnostics/measurement_sensitivity_notes.txt",
   "diagnostics/sector_source_coverage.csv",
   "diagnostics/source_text_classification_coverage.csv",
   "diagnostics/extended_analysis_notes.txt"
@@ -110,4 +120,36 @@ stopifnot(nrow(annual_models) == 4L,
               annual_models$province_cluster_ci95_lower),
           all(annual_models$province_cluster_fdr_bh_p >= 0 &
               annual_models$province_cluster_fdr_bh_p <= 1))
+loan_groups <- read.csv(file.path(out,"tables/exclusive_loan_reporting_groups.csv"))
+stopifnot(sum(loan_groups$households)==38275L,
+          all(loan_groups$weighted_fraction>=0 &
+              loan_groups$weighted_fraction<=1),
+          all(abs(aggregate(weighted_fraction~residence,loan_groups,sum)$weighted_fraction-1)<1e-10))
+loan_types <- read.csv(file.path(out,"diagnostics/loan_type_field_audit.csv"))
+stopifnot(sum(loan_types$records)==6053L,
+          all(loan_types$median_reported_amount>0),
+          all(loan_types$source_nonempty_fraction>=0 &
+              loan_types$source_nonempty_fraction<=1))
+recon <- read.csv(file.path(out,"diagnostics/expenditure_leaveout_reconciliation.csv"))
+stopifnot(sum(recon$households)==38275L,
+          sum(recon$leaveout_eligible)>=30000L,
+          all(recon$leaveout_eligible<=recon$households))
+sensitivity <- read.csv(file.path(out,
+ "tables/borrowing_measurement_and_control_sensitivity.csv"))
+primary <- read.csv(file.path(out,"tables/leaveout_primary_robustness.csv"))
+stopifnot(nrow(sensitivity)==16L,nrow(primary)==4L,
+          setequal(unique(sensitivity$loan_comparison),
+                   c("any","nonhousing_only_vs_none","housing_only_vs_none")),
+          all(is.finite(sensitivity$odds_ratio)&sensitivity$odds_ratio>0),
+          all(is.finite(sensitivity$standard_error)&sensitivity$standard_error>0),
+          all(is.finite(sensitivity$standardized_probability_difference_pp)),
+          all(sensitivity$ci95_lower>0 &
+              sensitivity$ci95_upper>=sensitivity$ci95_lower),
+          all(primary$observations==sum(recon$leaveout_eligible)),
+          all(primary$province_cluster_df>0 &
+              primary$province_cluster_df<=30),
+          all(primary$province_cluster_ci95_lower>0 &
+              primary$province_cluster_ci95_upper>=primary$province_cluster_ci95_lower),
+          all(primary$province_cluster_BH_p>=0 &
+              primary$province_cluster_BH_p<=1))
 message("All output and source-coverage checks passed.")

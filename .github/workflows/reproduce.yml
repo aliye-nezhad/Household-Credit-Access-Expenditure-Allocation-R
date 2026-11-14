@@ -59,7 +59,10 @@ jobs:
             analysis_sample_checks.csv model_sample_sizes.csv \
             sector_source_coverage.csv annual_durable_purchase_source_counts.csv \
             source_text_classification_coverage.csv expenditure_quartile_boundaries.csv \
-            input_hashes.txt; do
+            input_hashes.txt loan_type_field_audit.csv \
+            loan_entry_multiplicity.csv expenditure_leaveout_reconciliation.csv \
+            alternative_expenditure_quartiles.csv alternative_rank_crosswalk.csv \
+            measurement_sensitivity_summary.csv measurement_sensitivity_notes.txt; do
             cp "$run_dir/diagnostics/$file" "outputs/diagnostics/$file"
           done
           cp "$run_dir/RESULTS.md" outputs/RESULTS.md
