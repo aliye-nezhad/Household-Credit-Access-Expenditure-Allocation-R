@@ -320,12 +320,23 @@ annual_models <- bind_rows(lapply(annual_model_categories,function(cat){
     left_join(positive,by=c("residence","Address"),relationship="one-to-one") %>%
     mutate(purchase_incidence=coalesce(purchase_incidence,0L),
            residence=factor(residence,levels=c("Rural","Urban")))
+  form <- purchase_incidence ~ reported_entry + expenditure_quartile +
+    residence + age + gender + literacy + log_household_size
   design <- svydesign(ids=~1,weights=~weight,data=d)
-  model <- svyglm(
-    purchase_incidence ~ reported_entry + expenditure_quartile + residence +
-      age + gender + literacy + log_household_size,
-    design=design,family=quasibinomial())
+  model <- svyglm(form,design=design,family=quasibinomial())
   fit <- summary(model)$coefficients["reported_entry",]
+
+  # Treat the 31 provinces as clusters in a separate sensitivity exercise.
+  # This is NOT a substitute for unavailable official HEIS PSUs and strata.
+  province_clusters <- length(unique(d$province))
+  check(province_clusters == 31L,
+        "Unexpected province count for cluster-variance sensitivity")
+  clustered_design <- svydesign(ids=~province,weights=~weight,data=d)
+  clustered_model <- svyglm(form,design=clustered_design,family=quasibinomial())
+  clustered_fit <- summary(clustered_model)$coefficients["reported_entry",]
+  tcrit <- qt(.975,df=survey::degf(clustered_design))
+  check(is.finite(tcrit) & is.finite(clustered_fit[2]) &
+        clustered_fit[2] > 0,"Invalid province cluster sensitivity estimate")
   tibble(
     purchase_group=cat,observations=nrow(d),
     reporting_households=sum(d$reported_entry),
@@ -335,9 +346,16 @@ annual_models <- bind_rows(lapply(annual_model_categories,function(cat){
     odds_ratio=exp(unname(fit[1])),
     ci95_lower=exp(unname(fit[1]-1.96*fit[2])),
     ci95_upper=exp(unname(fit[1]+1.96*fit[2])),
-    p_value=unname(fit[4]))
+    p_value=unname(fit[4]),
+    province_clusters=province_clusters,
+    province_cluster_standard_error=unname(clustered_fit[2]),
+    province_cluster_ci95_lower=exp(unname(clustered_fit[1]-tcrit*clustered_fit[2])),
+    province_cluster_ci95_upper=exp(unname(clustered_fit[1]+tcrit*clustered_fit[2])),
+    province_cluster_p_value=unname(clustered_fit[4]))
 }))
 annual_models$fdr_bh_p_value <- p.adjust(annual_models$p_value,method="BH")
+annual_models$province_cluster_fdr_bh_p <- p.adjust(
+  annual_models$province_cluster_p_value,method="BH")
 save_csv(annual_models,"tables/annual_durable_purchase_associations.csv")
 
 annual_fig <- ggplot(durable_summary,

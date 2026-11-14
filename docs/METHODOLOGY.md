@@ -97,6 +97,11 @@ An additional model describes purchase participation in **any** of these
 three groups. False discovery rate adjustment is shown for these four
 exploratory outcomes as a family.
 
+For each annual outcome, an additional variance sensitivity treats the
+31 provinces as clusters, using t-based intervals with 30 cluster degrees
+of freedom. This is **not** the official HEIS complex design or a guarantee
+of design-consistent inference. Both uncertainty approaches are reported.
+
 The identical 12-month recall periods are a major improvement over
 comparing current monthly expenditure with annual loan entries, but they
 do not establish the temporal ordering, loan purpose, or whether a

@@ -100,5 +100,12 @@ stopifnot(nrow(annual_models) == 4L,
           all(annual_models$ci95_lower > 0 &
               annual_models$ci95_upper >= annual_models$ci95_lower),
           all(annual_models$fdr_bh_p_value >= 0 &
-              annual_models$fdr_bh_p_value <= 1))
+              annual_models$fdr_bh_p_value <= 1),
+          all(annual_models$province_clusters == 31L),
+          all(annual_models$province_cluster_standard_error > 0),
+          all(annual_models$province_cluster_ci95_lower > 0 &
+              annual_models$province_cluster_ci95_upper >=
+              annual_models$province_cluster_ci95_lower),
+          all(annual_models$province_cluster_fdr_bh_p >= 0 &
+              annual_models$province_cluster_fdr_bh_p <= 1))
 message("All output and source-coverage checks passed.")

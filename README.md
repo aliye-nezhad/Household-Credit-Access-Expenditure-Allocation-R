@@ -48,8 +48,10 @@ The six additional expenditure sections measure purchases during the
 **previous month**, not full-year spending. Their participation results
 are not interpreted as causal consumption responses to credit.
 
-The survey's full sampling design is not established here; reported regression
-standard errors use a weights-only approximation. This is not a study of
+The survey's full sampling design is not established here; baseline
+regression standard errors use a weights-only approximation. The annual
+durable-outcome models additionally report a province-clustered variance
+sensitivity with 31 clusters. This is not a study of
 monetary-policy transmission or a causal estimate of the impact of credit.
 
 ## Research findings and outputs

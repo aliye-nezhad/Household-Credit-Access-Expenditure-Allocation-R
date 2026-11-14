@@ -132,15 +132,17 @@ rows <- c(rows,
  "logarithm of household size. The adjusted odds ratios for loan-entry ",
  "reporting are:",
  "",
- "| Annual purchase outcome | Odds ratio | 95% interval | BH-adjusted p |",
- "| --- | ---: | ---: | ---: |"
+ "| Annual purchase outcome | Odds ratio | 95% interval (weights-only) | 95% interval (province clusters) | Cluster BH-adjusted p |",
+ "| --- | ---: | ---: | ---: | ---: |"
 )
 for(i in seq_len(nrow(annual_m))) {
  a <- annual_m[i,]
- rows <- c(rows,sprintf("| %s | %s | %s–%s | %s |",
+ rows <- c(rows,sprintf("| %s | %s | %s–%s | %s–%s | %s |",
                        a$purchase_group,cell(a$odds_ratio),
                        cell(a$ci95_lower),cell(a$ci95_upper),
-                       ptext(a$fdr_bh_p_value)))
+                       cell(a$province_cluster_ci95_lower),
+                       cell(a$province_cluster_ci95_upper),
+                       ptext(a$province_cluster_fdr_bh_p)))
 }
 rows <- c(rows,
  "",
@@ -179,7 +181,12 @@ rows <- c(rows,
  "",
  "![Previous-month purchase participation](figures/monthly_sector_purchase_participation.png)",
  "",
- "## 4. Financial intermediation and measurement issues",
+ "These province-clustered intervals treat provinces as clusters and",
+"use a t-based reference with 30 cluster degrees of freedom. The",
+"estimates are a variance sensitivity check rather than an official",
+"reconstruction of the HEIS sampling design.",
+"",
+"## 4. Financial intermediation and measurement issues",
  "",
  paste0(
  "The loan-record financing-source field is nonempty in approximately ",
