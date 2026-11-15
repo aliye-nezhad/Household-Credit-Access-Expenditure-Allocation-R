@@ -65,33 +65,75 @@ This downloads and verifies pinned source files, processes the required survey t
 ## Repository structure
 
 ~~~text
+├── docs/
+│   ├── METHODOLOGY.md
+│   ├── QUESTIONNAIRE_TRACE.md
+│   └── VARIABLE_MAP.md
+├── .github/
+│   └── workflows/
+│       └── reproduce.yml
 ├── code/
 │   ├── analysis.R
 │   ├── durable_codes.R
 │   ├── extended_analysis.R
 │   ├── measurement_sensitivity.R
-│   ├── write_research_note.R
-│   └── validate.R
+│   ├── validate.R
+│   └── write_research_note.R
 ├── data/
 │   ├── README.md
 │   └── source_sha256.txt
-├── docs/
-│   ├── METHODOLOGY.md
-│   ├── QUESTIONNAIRE_TRACE.md
-│   └── VARIABLE_MAP.md
+├── scripts/
+│   └── reproduce.R
 ├── outputs/
-│   ├── RESEARCH_NOTE.md
-│   ├── RESULTS.md
-│   ├── tables/
+│   ├── diagnostics/
+│   │   ├── alternative_expenditure_quartiles.csv
+│   │   ├── alternative_rank_crosswalk.csv
+│   │   ├── analysis_sample_checks.csv
+│   │   ├── annual_durable_purchase_source_counts.csv
+│   │   ├── expenditure_leaveout_reconciliation.csv
+│   │   ├── expenditure_quartile_boundaries.csv
+│   │   ├── input_hashes.txt
+│   │   ├── loan_entry_multiplicity.csv
+│   │   ├── loan_field_diagnostics.csv
+│   │   ├── loan_type_field_audit.csv
+│   │   ├── measurement_sensitivity_notes.txt
+│   │   ├── measurement_sensitivity_summary.csv
+│   │   ├── model_sample_sizes.csv
+│   │   ├── sample_linkage.csv
+│   │   ├── sector_source_coverage.csv
+│   │   ├── selected_durable_item_code_audit.csv
+│   │   ├── source_loan_record_counts.csv
+│   │   └── source_text_classification_coverage.csv
 │   ├── figures/
-│   └── diagnostics/
-├── scripts/reproduce.R
-├── .github/workflows/reproduce.yml
+│   │   ├── annual_durable_purchase_participation.png
+│   │   ├── monthly_sector_purchase_participation.png
+│   │   └── reported_entries_by_expenditure_quartile.png
+│   ├── tables/
+│   │   ├── annual_durable_purchase_associations.csv
+│   │   ├── annual_durable_purchase_by_reporting_status.csv
+│   │   ├── borrowing_measurement_and_control_sensitivity.csv
+│   │   ├── budget_composition_by_reporting_status.csv
+│   │   ├── exclusive_loan_reporting_groups.csv
+│   │   ├── financing_source_groups.csv
+│   │   ├── leaveout_primary_robustness.csv
+│   │   ├── loan_type_joint_contrast.csv
+│   │   ├── monthly_sector_spending_by_reporting_status.csv
+│   │   ├── monthly_sector_spending_differences.csv
+│   │   ├── regression_coefficients.csv
+│   │   ├── reported_entries_by_expenditure_quartile.csv
+│   │   ├── reported_loan_amounts.csv
+│   │   ├── reported_loan_entries_by_residence.csv
+│   │   └── sector_purchase_associations.csv
+│   ├── README.md
+│   ├── RESEARCH_NOTE.md
+│   └── RESULTS.md
 ├── .gitattributes
+├── .gitignore
+├── CITATION.cff
 ├── pixi.toml
 ├── pixi.lock
-├── CITATION.cff
-└── LICENSE
+├── LICENSE
+└── README.md
 ~~~
 
 ## Author
