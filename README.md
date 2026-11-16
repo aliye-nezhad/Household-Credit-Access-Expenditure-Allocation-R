@@ -8,7 +8,7 @@ An empirical **R** study using the 2014–2015 Household Expenditure and Income 
 
 **Scope:** The measure records specific financial-service entries, **not** comprehensive credit access, outstanding debt, or verified loan-financed purchases. Estimates describe associations, not causal effects.
 
-## Data and sample
+## Data and sample 
 
 The analysis joins the original survey's Access tables with rural and urban household workbooks.
 
